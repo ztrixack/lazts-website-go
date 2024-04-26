@@ -1,0 +1,14 @@
+services:
+  lazts-website:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.test
+    image: lazts-website:test
+    container_name: lazts-website-test
+    volumes:
+      - $PWD:/src
+    networks:
+      - lazts-test
+
+networks:
+  lazts-test:

@@ -1,0 +1,19 @@
+services:
+  lazts-website:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    image: lazts-website:dev
+    container_name: lazts-website-dev
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD:/src
+    environment:
+      PORT: 8080
+    networks:
+      - lazts-dev
+
+networks:
+  lazts-dev:
