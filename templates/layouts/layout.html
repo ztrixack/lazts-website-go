@@ -1,23 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000" />
+    <meta name="description" content="The event horizon of my knowledge">
+    <title>{{.Title}}</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{.Title}}</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/static/icons/icon-192x192.webp" />
+    <link rel="canonical" href="https://lazts.com"/>
 
-<body class="bg-gray-200 p-5">
-  {{template "header.html" .}}
-  
-  <main class="container mx-auto p-4">
-    {{.Content}}
-  </main>
+    <!-- Preconnect to required origins to speed up connection times -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  {{template "footer.html" .}}
+    <!-- Load CSS asynchronously to prevent render-blocking -->
+    <link href="/static/css/app.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/static/css/air.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="/static/css/app.css" rel="stylesheet" />
+      <link href="/static/css/air.css" rel="stylesheet" />
+    </noscript>
 
-  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-</body>
+    <!-- Asynchronous Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
+    <!-- Defer JavaScript to prevent render-blocking -->
+    <script rel="preconnect" src="https://unpkg.com/htmx.org@1.9.12"></script>
+  </head>
+
+  <body class="bg-zinc-100 transition-colors duration-300 dark:bg-zinc-900">
+    {{template "header.html" .}}
+
+    <main id="content">{{.Content}}</main>
+
+    {{template "footer.html" .}}
+
+    <script defer src="/static/js/header.js"></script>
+    <script defer src="/static/js/navigation.js"></script>
+    <script defer src="/static/js/theme.js"></script>
+  </body>
 </html>

@@ -1,6 +1,24 @@
-<div class="container mx-auto">
-    <h1 class="text-xl font-bold text-center">Go + HTMX + TailwindCSS Example</h1>
-    <div hx-get="/markdown" hx-swap hx-trigger="load" class="mt-4 p-4 bg-white rounded shadow">
-        Loading ...
-    </div>
-</div>
+<section
+  hx-get="/home/blackhole"
+  hx-trigger="revealed"
+  hx-swap="innerHTML"
+  class="flex min-h-screen items-center justify-center"
+></section>
+
+<section
+  hx-get="/home/cloud"
+  hx-trigger="revealed"
+  hx-swap="innerHTML"
+  class="flex min-h-[50vh] items-center justify-center"
+></section>
+
+<section
+  hx-get="/home/books"
+  hx-trigger="revealed"
+  hx-swap="innerHTML"
+  class="flex min-h-screen items-center justify-center"
+></section>
+
+<section hx-get="/home/vacations" hx-trigger="revealed" hx-swap="innerHTML" class="my-48 min-h-screen"></section>
+
+<section hx-get="/home/notes" hx-trigger="revealed" hx-swap="innerHTML" class="min-h-screen"></section>

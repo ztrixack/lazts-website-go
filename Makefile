@@ -42,10 +42,10 @@ docker-dev:
 	docker compose -f docker-compose.dev.yaml up --build --renew-anon-volumes --abort-on-container-exit --exit-code-from lazts-website; \
 	docker compose -f docker-compose.dev.yaml down
 
-docker-release:
+docker-staging:
 	docker compose -f docker-compose.yaml up --build -d
 
-css-watch:
+css:
 	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --watch
 
 css-minify:

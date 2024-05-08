@@ -1,28 +1,37 @@
 package templ
 
 import (
-	"bytes"
-	"fmt"
 	"html/template"
 	"io"
+	"lazts/internal/modules/md"
 	"lazts/pkg/logger"
 )
 
-type PageData struct {
-	Title   string
-	Content template.HTML
-}
-
 type Servicer interface {
-	Render(wr io.Writer, page string, title string) error
+	Render(wr io.Writer, page string) error
+	RenderMarkdown(wr io.Writer, domain string, page string) error
+	RenderHeroBlackhole(wr io.Writer, counter int) error
+	RenderHeroBooks(wr io.Writer) error
+	RenderHeroCloud(wr io.Writer, counter int) error
+	RenderHeroVacations(wr io.Writer) error
+	RenderHeroNotes(wr io.Writer) error
+	RenderVacationList(wr io.Writer) error
+	RenderVacationHighlight(wr io.Writer) error
+	RenderBookList(wr io.Writer, search, catalog, status string) error
+	RenderBookFilter(wr io.Writer, search, catalog, status string) error
+	RenderNoteList(wr io.Writer) error
+	RenderNoteTags(wr io.Writer) error
 }
 
 type service struct {
 	log       logger.Logger
+	markdown  md.Moduler
 	templates *template.Template
 }
 
-func New(log logger.Logger) *service {
+var _ Servicer = (*service)(nil)
+
+func New(log logger.Logger, md md.Moduler) *service {
 	tpl, err := setupTemplates()
 	if err != nil {
 		log.Err(err).C("Error setting up templates")
@@ -36,6 +45,7 @@ func New(log logger.Logger) *service {
 
 	return &service{
 		log:       log,
+		markdown:  md,
 		templates: tpl,
 	}
 }
@@ -47,19 +57,4 @@ func setupTemplates() (*template.Template, error) {
 	}
 
 	return templates, nil
-}
-
-func (s *service) Render(wr io.Writer, name string, title string) error {
-	var buf bytes.Buffer
-
-	page := fmt.Sprintf("%s.html", name)
-	if err := s.templates.ExecuteTemplate(&buf, page, nil); err != nil {
-		s.log.Err(err).E("Error executing template")
-		return err
-	}
-
-	return s.templates.ExecuteTemplate(wr, "layout.html", PageData{
-		Title:   title,
-		Content: template.HTML(buf.String()),
-	})
 }

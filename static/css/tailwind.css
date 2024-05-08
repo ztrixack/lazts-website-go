@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.katex-html {
-  display: none;
+#content {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.htmx-swapping #content {
+  opacity: 0;
+}
+
+body {
+  font-family: 'Kanit', 'sans-serif';
 }

@@ -1,10 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.templ"],
+  mode: 'jit',
+  darkMode: "class",
+  content: ["./templates/**/*.html", "./static/js/**/*.js"],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        blackhole: 'blackhole 9s linear infinite',
+      },
+      keyframes: {
+        blackhole: {
+          '0%': { transform: 'rotate(0turn)' },
+          '100%': { transform: 'rotate(1turn)' },
+        },
+      },
+      fontFamily: {
+        'kanit': ['Kanit', 'sans-serif'],
+      }
+    },
   },
   plugins: [
-    require('@tailwindcss/typography'),
   ],
 }

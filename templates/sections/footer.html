@@ -1,0 +1,61 @@
+<footer class="mt-48">
+  <div class="container relative mx-auto p-4 sm:px-6 lg:px-8 lg:pt-12">
+    <div class="absolute end-4 top-4 sm:end-6 lg:end-8 lg:top-8">
+      <div id="to-top" class="rounded-full bg-orange-500 p-2 shadow transition hover:bg-orange-400 sm:p-3 lg:p-4">
+        <svg
+          fill="#000000"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24px"
+          height="24px"
+          viewBox="0 0 52 52"
+          enable-background="new 0 0 52 52"
+          xml:space="preserve"
+          class="fill-white dark:fill-zinc-900"
+        >
+          <path
+            d="M4.4,34.2l20.5-20.7c0.6-0.6,1.6-0.6,2.2,0l20.5,20.7c0.6,0.6,0.6,1.6,0,2.2l-2.2,2.2
+	c-0.6,0.6-1.6,0.6-2.2,0L27.1,22.2c-0.6-0.6-1.6-0.6-2.2,0L8.8,38.5c-0.6,0.6-1.6,0.6-2.2,0l-2.2-2.2C3.9,35.7,3.9,34.8,4.4,34.2z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="lg:flex lg:items-end lg:justify-between">
+      <div>
+        <div class="flex justify-center lg:justify-start">
+          <span
+            class="ml-4 self-center text-3xl font-semibold uppercase tracking-widest text-slate-900 dark:text-white"
+          >
+            {{.Title}}
+          </span>
+        </div>
+
+        <p
+          class="mx-auto mt-6 flex flex-col text-center leading-relaxed text-slate-600 dark:text-slate-400 lg:text-left"
+        >
+          <span>Hey there! 👋</span>
+          <span>This place is a casual space where I share my tech adventures and travel stories.</span>
+          <span>Keep an eye out for practical tips and real-world tales. Catch you there! 👨‍💻 🌏 </span>
+        </p>
+      </div>
+
+      <ul
+        class="mt-8 flex flex-wrap justify-center gap-6 text-slate-600 dark:text-slate-400 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+      >
+        <li>HTMX</li>
+        <li>TailwindCSS</li>
+        <li>GO</li>
+      </ul>
+    </div>
+
+    <p class="mt-8 text-center text-sm text-slate-600 dark:text-slate-400 lg:text-right">
+      Copyright &copy; {{.Year}}. All rights reserved. Made with 🧡 and 🤲
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('to-top').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

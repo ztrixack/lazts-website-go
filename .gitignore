@@ -25,3 +25,8 @@ go.work
 
 # air
 bin
+
+# npm
+node_modules/
+
+*.tar

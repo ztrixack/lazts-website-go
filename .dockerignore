@@ -8,17 +8,29 @@ README.md
 LICENSE
 AUTHORS.md
 CONTRIBUTING.md
+Makefile
 
 # Editor configurations
 .editorconfig
 
 # dockerfile
 Dockerfile*
-docker-compose.*
+docker-compose*
+.dockerignore
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-*.html
+*.json
+*.yaml
+*.config.js
+*.tar
+
+# GCP
+.gcloudignore
+.cloudbuild.yaml
 
 # local
-db/
+.air.*
+.*rc
+bin/
+node_modules/

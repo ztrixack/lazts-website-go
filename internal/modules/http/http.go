@@ -13,6 +13,7 @@ import (
 type Module interface {
 	Config() config
 	Register(path string, handler http.HandlerFunc)
+	Handle(path string, handler http.Handler)
 	ServeHTTP(w http.ResponseWriter, r *http.Request)
 	Serve() error
 }
@@ -37,13 +38,17 @@ func (m *module) Register(path string, handler http.HandlerFunc) {
 	m.router.HandleFunc(path, handler)
 }
 
+func (m *module) Handle(path string, handler http.Handler) {
+	m.router.Handle(path, handler)
+}
+
 func (m *module) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	m.router.ServeHTTP(w, r)
 }
 
 func (m *module) Serve() error {
 	server := &http.Server{
-		Addr:    "localhost:" + m.config.Port,
+		Addr:    ":" + m.config.Port,
 		Handler: m.router,
 	}
 

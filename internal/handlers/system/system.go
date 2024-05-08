@@ -2,21 +2,23 @@ package system
 
 import (
 	"lazts/internal/modules/http"
-	"lazts/internal/services/markdown"
+	"lazts/internal/modules/http/middlewares"
 	"lazts/internal/services/templ"
 )
 
 type handler struct {
 	hs templ.Servicer
-	ms markdown.Servicer
 }
 
-func New(m http.Module, hs templ.Servicer, ms markdown.Servicer) {
-	h := &handler{hs, ms}
+func New(m http.Module, hs templ.Servicer) {
+	h := &handler{hs}
 	h.setRouter(m)
 }
 
 func (h *handler) setRouter(m http.Module) {
-	m.Register("GET /markdown", h.Markdown)
-	m.Register("GET /static/", h.Static)
+	minify := middlewares.Minify()
+	m.Register("GET /static/images/", h.Images)
+	m.Register("GET /static/notes/", h.NoteContent)
+	m.Handle("GET /static/js/", minify.MiddlewareWithError(h.Javascript(), h.Error))
+	m.Handle("GET /static/css/", minify.MiddlewareWithError(h.CSS(), h.Error))
 }
