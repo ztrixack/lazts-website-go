@@ -20,5 +20,5 @@ function updateFilter() {
   const queryParams = new URLSearchParams(cleanFilters).toString();
 
   history.pushState(null, '', queryParams ? '/books?' + queryParams : '/books');
-  htmx.ajax('GET', queryParams ? '/books/list?' + queryParams : '/books/list', { target: '#book-list', swap: 'innerHTML' });
+  htmx.ajax('GET', queryParams ? '/_books/list?' + queryParams : '/_books/list', { target: '#book-list', swap: 'innerHTML' });
 }

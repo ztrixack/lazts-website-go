@@ -5,7 +5,7 @@ import (
 )
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -14,8 +14,7 @@ func (h *handler) List(w http.ResponseWriter, r *http.Request) {
 	catalog := r.URL.Query().Get("catalog")
 	status := r.URL.Query().Get("status")
 
-	err := h.hs.RenderBookList(w, search, catalog, status)
-	if err != nil {
+	if err := h.book.RenderList(w, search, catalog, status); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

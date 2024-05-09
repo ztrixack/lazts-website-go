@@ -15,18 +15,18 @@ func TestConfig(t *testing.T) {
 		expectedPort string
 	}{
 		{
-			name:         "Given PORT set to 8082, expect 8082",
-			env:          map[string]string{"PORT": "8082"},
+			name:         "Given HTTP_PORT set to 8082, expect 8082",
+			env:          map[string]string{"HTTP_PORT": "8082"},
 			expectedPort: "8082",
 		},
 		{
-			name:         "Given no PORT set, expect default port 8080",
-			env:          map[string]string{"PORT": "8080"},
+			name:         "Given no HTTP_PORT set, expect default port 8080",
+			env:          map[string]string{"HTTP_PORT": "8080"},
 			expectedPort: "8080",
 		},
 		{
-			name:         "Given PORT set to non-numeric, expect default port 8080",
-			env:          map[string]string{"PORT": "abc"},
+			name:         "Given HTTP_PORT set to non-numeric, expect default port 8080",
+			env:          map[string]string{"HTTP_PORT": "abc"},
 			expectedPort: "8080",
 		},
 	}

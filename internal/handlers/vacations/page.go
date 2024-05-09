@@ -6,7 +6,7 @@ import (
 )
 
 func (h *handler) Page(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -22,9 +22,9 @@ func (h *handler) routePage(r *http.Request, w http.ResponseWriter) error {
 	parts := strings.Split(path, "/")
 
 	if parts[0] == "" {
-		return h.hs.Render(w, "vacations")
+		return h.pager.Render(w, "vacations")
 	} else {
-		return h.hs.Render(w, "vacations_content")
+		return h.pager.Render(w, "vacations_content")
 	}
 
 }

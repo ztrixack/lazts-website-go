@@ -6,7 +6,7 @@ import (
 )
 
 func (h *handler) Cloud(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -22,8 +22,7 @@ func (h *handler) Cloud(w http.ResponseWriter, r *http.Request) {
 		count = cnt
 	}
 
-	err := h.hs.RenderHeroCloud(w, count)
-	if err != nil {
+	if err := h.pager.RenderCloud(w, count); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

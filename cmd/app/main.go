@@ -9,7 +9,10 @@ import (
 	"lazts/internal/modules/http"
 	"lazts/internal/modules/http/middlewares"
 	"lazts/internal/modules/md"
-	"lazts/internal/services/templ"
+	"lazts/internal/services/book"
+	"lazts/internal/services/note"
+	"lazts/internal/services/page"
+	"lazts/internal/services/vacation"
 	"lazts/pkg/logger"
 )
 
@@ -19,15 +22,18 @@ func main() {
 	server.Use(middlewares.Logger(log), middlewares.Compressor())
 	markdown := md.New(md.Config())
 
-	ht := templ.New(log, markdown)
+	pager := page.New(log, markdown)
+	booker := book.New(log)
+	vacationer := vacation.New(log, markdown)
+	noter := note.New(log, markdown)
 
-	home.New(server, ht)
-	vacations.New(server, ht)
-	books.New(server, ht)
-	notes.New(server, ht)
-	system.New(server, ht)
+	home.New(server, pager, booker, vacationer, noter)
+	books.New(server, pager, booker)
+	vacations.New(server, pager, vacationer)
+	notes.New(server, pager, noter)
+	system.New(server, pager)
 
-	log.I("starting server")
+	log.Fields("port", server.Config().Port).I("starting server")
 	err := server.Serve()
 	if err != nil {
 		log.Err(err).I("failed to start server")

@@ -2,20 +2,25 @@ package books
 
 import (
 	"lazts/internal/modules/http"
-	"lazts/internal/services/templ"
+	"lazts/internal/services/book"
+	"lazts/internal/services/page"
 )
 
 type handler struct {
-	hs templ.Servicer
+	page page.Servicer
+	book book.Servicer
 }
 
-func New(m http.Module, hs templ.Servicer) {
-	h := &handler{hs}
+func New(m http.Module, page page.Servicer, book book.Servicer) {
+	h := &handler{page, book}
 	h.setRouter(m)
 }
 
 func (h *handler) setRouter(m http.Module) {
+	// page
 	m.Register("GET /books", h.Page)
-	m.Register("GET /books/filter", h.Filter)
-	m.Register("GET /books/list", h.List)
+
+	// partials
+	m.Register("GET /_books/filter", h.Filter)
+	m.Register("GET /_books/list", h.List)
 }

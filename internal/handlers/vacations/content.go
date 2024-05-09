@@ -6,7 +6,7 @@ import (
 )
 
 func (h *handler) Content(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -21,5 +21,5 @@ func (h *handler) routeContent(r *http.Request, w http.ResponseWriter) error {
 	path := strings.TrimPrefix(r.URL.Path, "/_vacations/contents/")
 	parts := strings.Split(path, "/")
 
-	return h.hs.RenderMarkdown(w, "vacations", parts[0])
+	return h.pager.RenderMarkdown(w, "vacations", parts[0])
 }

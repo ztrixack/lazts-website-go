@@ -5,13 +5,12 @@ import (
 )
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	err := h.hs.RenderVacationList(w)
-	if err != nil {
+	if err := h.vacationer.RenderList(w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

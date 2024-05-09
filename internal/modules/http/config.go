@@ -10,7 +10,7 @@ type config struct {
 }
 
 func Config() *config {
-	port := os.Getenv("PORT")
+	port := os.Getenv("HTTP_PORT")
 	if port == "" || !isValidPort(port) {
 		port = "8080"
 	}
