@@ -1,8 +1,8 @@
 package vacation
 
 import (
-	"fmt"
 	"path/filepath"
+	"time"
 
 	"lazts/internal/utils"
 )
@@ -27,17 +27,29 @@ type VacationHTML struct {
 	ImageAlt string
 	Link     string
 	ShowDate string
+	DateTime string
 	Location string
 }
 
 func (v Vacation) ToHTML() VacationHTML {
+	from, err := time.Parse("2006-01-02", v.DateFrom)
+	if err != nil {
+		from = time.Now()
+	}
+
+	to, err := time.Parse("2006-01-02", v.DateTo)
+	if err != nil {
+		to = time.Now()
+	}
+
 	return VacationHTML{
 		Title:    v.Title,
 		Excerpt:  v.Excerpt,
 		Image:    utils.UpdateFeaturedImagePaths(v.FeaturedImage, filepath.Join("", "static", "vacations", v.Slug)),
 		ImageAlt: v.FeaturedImageAlt,
-		Link:     v.Slug,
-		ShowDate: fmt.Sprintf("%s - %s", v.DateFrom, v.DateTo),
-		Location: v.Location,
+		Link:     filepath.Join("/", "vacations", v.Slug),
+		ShowDate: utils.ConvertShowDate(from, to),
+		DateTime: from.Format(time.RFC3339),
+		Location: utils.CountryToFlagEmoji(v.Location),
 	}
 }

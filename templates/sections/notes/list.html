@@ -3,53 +3,48 @@
     <h2 class="text-2xl text-slate-900 dark:text-slate-100 lg:text-4xl"><strong>Latest</strong> Notes</h2>
   </div>
 
-  <div class="grid gap-10 md:grid-cols-2 md:gap-20">
+  <div class="grid gap-10 lg:grid-cols-2 lg:gap-20">
     {{range .Items}}
-    <div class="group">
-      <div class="overflow-hidden rounded-md bg-slate-100 transition-all hover:scale-105 dark:bg-slate-800">
-        <a class="relative block aspect-[21/9] cursor-pointer" href="{{.Link}}">
+    <a
+      class="group flex min-h-80 cursor-pointer flex-col rounded border bg-white transition-all hover:scale-110"
+      href="{{.Link}}"
+    >
+      <div class="rounded-t-md bg-slate-100 dark:bg-slate-800">
+        <div class="relative block aspect-[21/9]">
           <img
-            class="absolute inset-0 h-full w-full object-cover text-transparent transition-all"
+            class="absolute inset-0 h-full w-full object-cover"
             sizes="(max-width: 768px) 30vw, 33vw"
             src="{{.Image}}"
             alt="{{.ImageAlt}}"
+            loading="lazy"
           />
-        </a>
+        </div>
       </div>
-      <div>
+
+      <div class="mx-4 my-2 flex h-full flex-col space-y-2">
         <div class="flex gap-3">
           {{range .Tags}}
-          <a href="{{.Link}}">
-            <span class="mt-5 inline-block text-xs font-medium uppercase tracking-wider text-orange-500">
-              {{.Name}}
-            </span>
-          </a>
+          <span class="inline-block text-xs font-medium uppercase tracking-wider text-orange-500"> {{.Name}} </span>
           {{end}}
         </div>
 
-        <h2 class="mt-2 line-clamp-3 text-lg font-medium tracking-normal text-slate-900 dark:text-slate-100">
+        <h2 class="line-clamp-2 text-lg font-medium tracking-normal text-slate-900 dark:text-slate-100">
           <span
-            class="bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px] dark:from-purple-800 dark:to-purple-900"
+            class="bg-gradient-to-r from-orange-200 to-orange-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
           >
             {{.Title}}
           </span>
         </h2>
 
-        <div>
-          <p class="mt-2 line-clamp-3 text-sm font-light text-slate-600 dark:text-slate-400">{{.Excerpt}}</p>
-        </div>
+        <p class="line-clamp-3 flex h-32 flex-1 text-sm font-light text-slate-600 dark:text-slate-400">{{.Excerpt}}</p>
 
-        <div class="mt-3 flex items-center space-x-3 text-slate-600 dark:text-slate-400">
+        <div class="flex space-x-2 self-end text-slate-600 dark:text-slate-400">
           <time class="truncate text-sm" datetime="{{.DateTime}}">{{.ShowTime}}</time>
           <span class="text-xs text-slate-300 dark:text-slate-600">•</span>
           <span class="truncate text-sm">{{.ReadTime}} min read</span>
         </div>
-
-        <a href="{{.Link}}" class="cursor-pointer">
-          <span class="mt-5 inline-block text-sm uppercase tracking-wider text-orange-500"> Read Article > </span>
-        </a>
       </div>
-    </div>
+    </a>
     {{end}}
   </div>
 </div>

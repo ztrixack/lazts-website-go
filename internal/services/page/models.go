@@ -2,19 +2,24 @@ package page
 
 var DEFAULT_MENU = []MenuItem{
 	{
+		Label: "Home",
+		Path:  "/",
+	},
+	{
 		Label: "Vacations",
 		Path:  "/vacations",
-		Icon:  "vacations",
 	},
 	{
 		Label: "Books",
 		Path:  "/books",
-		Icon:  "books",
 	},
 	{
 		Label: "Notes",
 		Path:  "/notes",
-		Icon:  "notes",
+	},
+	{
+		Label: "About",
+		Path:  "/about",
 	},
 }
 

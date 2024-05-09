@@ -1,5 +1,7 @@
 <section class="container mx-auto my-24 text-slate-900 dark:text-slate-100">
-  <article name="article" id="article">Loading ...</article>
+  <article name="article" id="article" class="min-h-screen w-full">Loading ...</article>
 </section>
 
-<script defer src="/static/js/vacation_article.js"></script>
+<script async src="/static/js/vacation_article.js"></script>
+
+<section>{{template "comments.html" .}}</section>

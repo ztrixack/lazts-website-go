@@ -19,8 +19,21 @@
     </div>
   </div>
 
-  <div id="brand-logo" class="block text-white">
-    <a href="/" class="brand">Brand Logo</a>
+  <div id="brand-logo" class="block">
+    <a href="/" class="block h-8 w-8 rounded-full border border-zinc-500 p-1">
+      <img
+        src="/static/icons/brand-dark-32x32.webp"
+        alt="brand-logo"
+        class="block h-full w-full object-contain dark:hidden"
+        loading="lazy"
+      />
+      <img
+        src="/static/icons/brand-light-32x32.webp"
+        alt="brand-logo"
+        class="hidden h-full w-full object-contain dark:block"
+        loading="lazy"
+      />
+    </a>
   </div>
 
   <nav

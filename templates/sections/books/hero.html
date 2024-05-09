@@ -31,7 +31,7 @@
 
     <a
       href="/books"
-      class="mt-4 inline-block rounded bg-orange-500 px-8 py-3 text-white transition hover:bg-orange-400"
+      class="mt-4 inline-block rounded border border-orange-500 bg-white px-8 py-3 text-center text-orange-500 transition hover:bg-orange-400 hover:text-white"
     >
       ห้องหนังสือ
     </a>
@@ -42,7 +42,7 @@
     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 md:gap-y-8">
       {{range $book := $shelf.Books}}
       <div class="h-48 w-32 overflow-hidden rounded-md bg-zinc-500 shadow-xl shadow-zinc-300 dark:shadow-zinc-700">
-        <img src="{{$book.Cover}}" alt="book" class="h-full w-full object-cover object-center" />
+        <img src="{{$book.Cover}}" alt="book" class="h-full w-full object-cover object-center" loading="lazy" />
       </div>
       {{end}}
     </div>

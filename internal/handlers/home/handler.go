@@ -23,6 +23,7 @@ func New(m http.Module, ps page.Servicer, bs book.Servicer, vs vacation.Servicer
 func (h *handler) setRouter(m http.Module) {
 	// page
 	m.Register("GET /", h.Home)
+	m.Register("GET /about", h.About)
 
 	// partials
 	m.Register("GET /_home/blackhole", h.Blackhole)

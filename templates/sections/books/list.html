@@ -7,7 +7,7 @@
           class="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
         >
           <div class="absolute inset-0 border border-gray-500 bg-white dark:border-0">
-            <img src="{{.Cover}}" alt="{book.subtitle" || book.title} class="h-full w-full object-cover" />
+            <img src="{{.Cover}}" alt="{book.subtitle" || book.title} class="h-full w-full object-cover"  loading="lazy" />
             <div
               class="absolute right-0 top-2 transform text-nowrap p-1 pl-4 text-right text-xs font-light text-white opacity-80 transition-opacity duration-500 group-hover:opacity-0 {{if eq .Status "done"}}bg-green-700{{end}}{{if eq .Status "reading"}}bg-orange-700{{end}}{{if eq .Status "wishlist"}}bg-gray-700{{end}}"
             >

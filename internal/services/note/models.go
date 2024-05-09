@@ -1,9 +1,11 @@
 package note
 
 import (
+	"fmt"
 	"lazts/internal/utils"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type Note struct {
@@ -19,15 +21,17 @@ type Note struct {
 }
 
 type NoteHTML struct {
-	Title    string
-	Excerpt  string
-	Image    string
-	ImageAlt string
-	Link     string
-	Tags     []TagHTML
-	DateTime string
-	ShowTime string
-	ReadTime int
+	Title         string
+	Excerpt       string
+	Image         string
+	ImageAlt      string
+	Link          string
+	Tags          []TagHTML
+	DateTime      string
+	ShowTime      string
+	ShowDateMonth string
+	ShowYear      string
+	ReadTime      int
 }
 
 type TagHTML struct {
@@ -37,16 +41,23 @@ type TagHTML struct {
 }
 
 func (n Note) ToHTML() NoteHTML {
+	publishedAt, err := time.Parse("2006-01-02", n.PublishedAt)
+	if err != nil {
+		publishedAt = time.Now()
+	}
+
 	return NoteHTML{
-		Title:    n.Title,
-		Excerpt:  n.Excerpt,
-		Image:    utils.UpdateFeaturedImagePaths(n.FeaturedImage, filepath.Join("", "static", "notes", n.Slug)),
-		ImageAlt: n.FeaturedImageAlt,
-		Link:     filepath.Join(n.Tags[0], n.Slug),
-		Tags:     ToTags(n.Tags),
-		DateTime: n.PublishedAt,
-		ShowTime: n.PublishedAt,
-		ReadTime: n.ReadTime,
+		Title:         n.Title,
+		Excerpt:       n.Excerpt,
+		Image:         utils.UpdateFeaturedImagePaths(n.FeaturedImage, filepath.Join("/", "static", "notes", n.Slug)),
+		ImageAlt:      n.FeaturedImageAlt,
+		Link:          filepath.Join("/", "notes", n.Tags[0], n.Slug),
+		Tags:          ToTags(n.Tags),
+		DateTime:      publishedAt.Format(time.RFC3339),
+		ShowTime:      publishedAt.Format("2016-01-02"),
+		ShowDateMonth: utils.ConvertShowDayMonth(publishedAt),
+		ShowYear:      fmt.Sprintf("%d", publishedAt.Year()),
+		ReadTime:      n.ReadTime,
 	}
 }
 

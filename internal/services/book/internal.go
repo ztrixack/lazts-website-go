@@ -6,6 +6,7 @@ import (
 	"lazts/internal/utils"
 	"math/rand/v2"
 	"os"
+	"strings"
 )
 
 func getCatalogs(books []Book) []models.Option {
@@ -19,15 +20,15 @@ func getCatalogs(books []Book) []models.Option {
 }
 
 func getList(name string) ([]Book, error) {
-	dirs, err := os.ReadDir(utils.GetContentDir(name))
+	files, err := os.ReadDir(utils.GetContentDir(name))
 	if err != nil {
 		return nil, err
 	}
 
 	books := make([]Book, 0)
-	for _, dir := range dirs {
-		if !dir.IsDir() {
-			bytes, err := os.ReadFile(utils.GetContentDir(name, dir.Name()))
+	for _, file := range files {
+		if !file.IsDir() && strings.HasSuffix(file.Name(), ".json") {
+			bytes, err := os.ReadFile(utils.GetContentDir(name, file.Name()))
 			if err != nil {
 				return nil, err
 			}

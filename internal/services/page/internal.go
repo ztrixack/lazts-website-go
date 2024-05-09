@@ -1,8 +1,15 @@
 package page
 
 import (
+	"fmt"
 	"math"
 	"math/rand/v2"
+	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/tdewolff/minify/v2"
+	"github.com/tdewolff/minify/v2/css"
 )
 
 func randomizeBlackholes(count int) []Blackhole {
@@ -28,4 +35,58 @@ func randomizeClouds(count int) []Cloud {
 		clouds = append(clouds, Cloud{Top: top, Left: left, Rotate: rotate})
 	}
 	return clouds
+}
+
+func injectInlineCSS(html string) string {
+	const stylesheet = "<link href=\"/static/css/app.css\" rel=\"stylesheet\" />"
+	const tailwindcss = "/*!tailwindcss v3.4.3 | MIT License | https://tailwindcss.com*/"
+	appcss, err := os.ReadFile(filepath.Join("", "static", "css", "app.css"))
+	if err != nil {
+		return html
+	}
+
+	m := minify.New()
+	m.AddFunc("text/css", css.Minify)
+	minified, err := m.Bytes("text/css", appcss)
+	if err != nil {
+		return html
+	}
+
+	return strings.Replace(
+		html,
+		stylesheet,
+		fmt.Sprintf("<style>%s</style>", strings.TrimPrefix(string(minified), tailwindcss)),
+		1,
+	)
+}
+
+func injectMarkdownCSS(html string) string {
+	const stylesheet = "<link href=\"/static/css/md.css\" rel=\"stylesheet\" />"
+	appcss, err := os.ReadFile(filepath.Join("", "static", "css", "md.css"))
+	if err != nil {
+		return html
+	}
+
+	m := minify.New()
+	m.AddFunc("text/css", css.Minify)
+	minified, err := m.Bytes("text/css", appcss)
+	if err != nil {
+		return html
+	}
+
+	return strings.Replace(
+		html,
+		stylesheet,
+		fmt.Sprintf("<style>%s</style>", string(minified)),
+		1,
+	)
+}
+
+func removeMarkdownCSS(html string) string {
+	return strings.Replace(
+		html,
+		"<link href=\"/static/css/md.css\" rel=\"stylesheet\" />",
+		"",
+		1,
+	)
 }

@@ -5,30 +5,14 @@
       เขียนบันทึกไว้กันลืม แต่ก็ดันลืมว่าเคยเขียนไว้
     </p>
   </div>
-  <div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-    {{range .Items}}
-    <article class="flex flex-col rounded bg-zinc-50">
-      <div class="flex flex-1 flex-col p-6">
-        <a rel="noopener noreferrer" href="#" aria-label="{{.Title}}"></a>
-        <a rel="noopener noreferrer" href="#" class="text-xs uppercase tracking-wider text-orange-600 hover:underline"
-          >Convenire</a
-        >
-        <h3 class="line-clamp-2 flex-1 py-2 font-medium leading-snug">{{.Title}}</h3>
-        <div class="flex flex-wrap justify-between space-x-2 pt-3 text-xs font-light text-slate-600">
-          <span>June 1, 2020</span>
-          <span>2.1K views</span>
-        </div>
-      </div>
-    </article>
-    {{end}}
-  </div>
+  <div class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-2">{{range .Items}} {{template "card.html" .}} {{end}}</div>
 
   <div class="mt-16 text-center">
     <a
       href="/notes"
-      class="mt-4 inline-block rounded bg-orange-500 px-8 py-3 text-white transition hover:bg-orange-400"
+      class="mt-4 inline-block rounded border border-orange-500 bg-white px-8 py-3 text-center text-orange-500 transition hover:bg-orange-400 hover:text-white"
     >
-      ดูเพิ่มเติม
+      เรียนรู้เพิ่มเติม 💡
     </a>
   </div>
 </div>

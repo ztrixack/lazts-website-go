@@ -3,8 +3,8 @@ Title: Test
 Slug: 000000-test
 Excerpt: Add YAML metadata to the document
 Location: Thailand
-DateForm: 2016-01-01
-DateTo: 2016-01-01
+DateFrom: 2016-01-01
+DateTo: 2016-01-11
 FeaturedImage: https://picsum.photos/1024/768?random=12
 FeaturedImageAlt: Sample Images
 PublishedAt: 2016-01-01

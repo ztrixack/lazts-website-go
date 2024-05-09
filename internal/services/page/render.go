@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"strings"
 	"time"
 )
 
@@ -16,9 +17,8 @@ type PageData struct {
 }
 
 type MenuItem struct {
-	Path  string
-	Icon  string
 	Label string
+	Path  string
 }
 
 func (s *service) Render(wr io.Writer, name string) error {
@@ -30,15 +30,30 @@ func (s *service) Render(wr io.Writer, name string) error {
 		Menu:  DEFAULT_MENU,
 	}
 
-	page := fmt.Sprintf("%s.html", name)
-	if err := s.templates.ExecuteTemplate(&buf, page, data); err != nil {
+	if err := s.templates.ExecuteTemplate(&buf, fmt.Sprintf("%s.html", name), data); err != nil {
 		s.log.Err(err).E("Error executing page template")
 		return err
 	}
 
 	data.Content = template.HTML(buf.String())
-	if err := s.templates.ExecuteTemplate(wr, "layout.html", data); err != nil {
+
+	var finalBuf bytes.Buffer
+	if err := s.templates.ExecuteTemplate(&finalBuf, "layout.html", data); err != nil {
 		s.log.Err(err).E("Error executing layout template")
+		return err
+	}
+
+	htmlWithInlineCSS := injectInlineCSS(finalBuf.String())
+
+	if strings.Contains(name, "content") {
+		htmlWithInlineCSS = injectMarkdownCSS(htmlWithInlineCSS)
+	} else {
+		htmlWithInlineCSS = removeMarkdownCSS(htmlWithInlineCSS)
+	}
+
+	_, err := wr.Write([]byte(htmlWithInlineCSS))
+	if err != nil {
+		s.log.Err(err).E("Error writing final content")
 		return err
 	}
 
