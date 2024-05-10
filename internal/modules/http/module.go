@@ -48,7 +48,7 @@ func (m *module) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (m *module) Serve() error {
 	server := &http.Server{
-		Addr:    ":" + m.config.Port,
+		Addr:    fmt.Sprintf("%s:%s", m.config.Host, m.config.Port),
 		Handler: m.router,
 	}
 
