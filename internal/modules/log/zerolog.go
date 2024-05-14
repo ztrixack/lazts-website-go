@@ -1,4 +1,4 @@
-package logger
+package log
 
 import (
 	"time"
@@ -6,14 +6,25 @@ import (
 	"github.com/rs/zerolog"
 )
 
-var _ Logger = (*zerologLogger)(nil)
+type Moduler interface {
+	Config() config
+	D(format string, args ...interface{})
+	I(format string, args ...interface{})
+	W(format string, args ...interface{})
+	E(format string, args ...interface{})
+	C(format string, args ...interface{})
+	Fields(kv ...interface{}) Moduler
+	Err(err error) Moduler
+}
 
-type zerologLogger struct {
+type module struct {
 	config *config
 	logger *zerolog.Logger
 }
 
-func NewZerolog(c *config) *zerologLogger {
+var _ Moduler = (*module)(nil)
+
+func New(c *config) *module {
 	writer := zerolog.ConsoleWriter{
 		Out:        c.Writer,
 		NoColor:    true,
@@ -27,37 +38,37 @@ func NewZerolog(c *config) *zerologLogger {
 		Caller().
 		Logger()
 
-	return &zerologLogger{
+	return &module{
 		config: c,
 		logger: &logger,
 	}
 }
 
-func (l *zerologLogger) Config() config {
+func (l *module) Config() config {
 	return *l.config
 }
 
-func (l *zerologLogger) D(format string, args ...interface{}) {
+func (l *module) D(format string, args ...interface{}) {
 	l.logger.Debug().CallerSkipFrame(1).Msgf(format, args...)
 }
 
-func (l *zerologLogger) I(format string, args ...interface{}) {
+func (l *module) I(format string, args ...interface{}) {
 	l.logger.Info().CallerSkipFrame(1).Msgf(format, args...)
 }
 
-func (l *zerologLogger) W(format string, args ...interface{}) {
+func (l *module) W(format string, args ...interface{}) {
 	l.logger.Warn().CallerSkipFrame(1).Msgf(format, args...)
 }
 
-func (l *zerologLogger) E(format string, args ...interface{}) {
+func (l *module) E(format string, args ...interface{}) {
 	l.logger.Error().CallerSkipFrame(1).Msgf(format, args...)
 }
 
-func (l *zerologLogger) C(format string, args ...interface{}) {
+func (l *module) C(format string, args ...interface{}) {
 	l.logger.Fatal().CallerSkipFrame(1).Msgf(format, args...)
 }
 
-func (l *zerologLogger) Fields(fields ...interface{}) Logger {
+func (l *module) Fields(fields ...interface{}) Moduler {
 	newLogger := l.logger.With()
 	k := ""
 	for i, v := range fields {
@@ -69,16 +80,16 @@ func (l *zerologLogger) Fields(fields ...interface{}) Logger {
 	}
 	logger := newLogger.Logger()
 
-	return &zerologLogger{
+	return &module{
 		config: l.config,
 		logger: &logger,
 	}
 }
 
-func (l *zerologLogger) Err(err error) Logger {
+func (l *module) Err(err error) Moduler {
 	logger := l.logger.With().Err(err).Logger()
 
-	return &zerologLogger{
+	return &module{
 		config: l.config,
 		logger: &logger,
 	}

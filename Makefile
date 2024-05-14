@@ -26,6 +26,8 @@ swag:
 
 init:
 	go install github.com/cosmtrek/air@latest
+	go get github.com/golang/mock/mockgen
+	go install github.com/golang/mock/mockgen
 
 dev:
 ifeq ($(uname_S), Windows)
@@ -50,3 +52,6 @@ css:
 
 css-minify:
 	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --minify
+
+mock:
+	mockgen -source=./internal/modules/imaging/module.go -destination=./mock/imaging_mock.go -package=mock

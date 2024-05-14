@@ -2,12 +2,12 @@ package middlewares
 
 import (
 	mux "lazts/internal/modules/http"
-	"lazts/pkg/logger"
+	"lazts/internal/modules/log"
 	"net/http"
 	"time"
 )
 
-func Logger(log logger.Logger) mux.MiddlewareFunc {
+func Logger(log log.Moduler) mux.MiddlewareFunc {
 	return func(next http.Handler) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// wr := &loggableResponseWriter{w, http.StatusOK, time.Now()}

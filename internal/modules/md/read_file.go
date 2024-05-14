@@ -16,5 +16,5 @@ func (m *module) ReadFile(domain string, name string) ([]byte, error) {
 		return nil, err
 	}
 
-	return utils.UpdateImagePaths(markdownData, filepath.Join("", "static", domain, name)), nil
+	return utils.UpdateImagePaths(markdownData, filepath.Join("/static", "contents", domain, name)), nil
 }

@@ -1,4 +1,4 @@
-package logger
+package log
 
 import (
 	"bytes"
@@ -12,10 +12,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func setup() (*bytes.Buffer, *zerologLogger) {
+func setup() (*bytes.Buffer, *module) {
 	buffer := new(bytes.Buffer)
 	c := &config{Level: 0, Writer: buffer}
-	logger := NewZerolog(c)
+	logger := New(c)
 	return buffer, logger
 }
 
@@ -75,7 +75,7 @@ func TestFields(t *testing.T) {
 	expectedUserField := "user=john_doe"
 	expectedIdField := "id=12345"
 
-	extendedLogger := logger.Fields(fields...).(*zerologLogger)
+	extendedLogger := logger.Fields(fields...).(*module)
 	extendedLogger.logger.Info().Msg("testing fields")
 
 	output := buffer.String()
@@ -88,7 +88,7 @@ func TestErr(t *testing.T) {
 	testError := errors.New("test error")
 	expectedError := fmt.Sprintf("error=\"%s\"", testError.Error())
 
-	errorLogger := logger.Err(testError).(*zerologLogger)
+	errorLogger := logger.Err(testError).(*module)
 	errorLogger.logger.Error().Msg("error occurred")
 
 	output := buffer.String()

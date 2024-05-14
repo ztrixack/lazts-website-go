@@ -1,17 +1,13 @@
-package md
+package imaging
 
 import (
-	_ "embed"
-	"io"
+	"image"
 )
 
-//go:embed mermaid.min.js
-var mermaidJSSource string
-
 type Moduler interface {
-	ReadFile(domain, name string) ([]byte, error)
-	Convert(source []byte, wr io.Writer) error
-	Metadata(source []byte, result interface{}) error
+	Open(path string) (image.Image, error)
+	Resize(img image.Image, width int, height int) *image.NRGBA
+	Overlay(background image.Image, img image.Image, pos image.Point, opacity float64) *image.NRGBA
 }
 
 type module struct {
