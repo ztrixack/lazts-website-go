@@ -27,10 +27,12 @@ docker-compose*
 
 # GCP
 .gcloudignore
-.cloudbuild.yaml
+cloudbuild.yaml
 
 # local
 .air.*
 .*rc
 bin/
-node_modules/
+
+# web
+web/node_modules/

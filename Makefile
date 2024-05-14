@@ -6,52 +6,59 @@ else
   uname_S := $(shell uname -s)
 endif
 
-fmt:
-	go fmt ./...
+PHONY: setup-pre-commit
+setup-pre-commit:
+	@echo "Setting up pre-commit..."
+	./scripts/setup-pre-commit.sh
 
+PHONY: setup-air
+setup-air:
+	@echo "Setting up air..."
+	go install github.com/cosmtrek/air@latest
+
+PHONY: setup-env
+setup-env:
+	@echo "Setting up env..."
+	cp .env.template .env
+
+PHONY: test
 test:
+	@echo "Running tests..."
 	go test -v ./...
 
-test-int:
-	docker compose -f docker-compose.test.yaml up --build --abort-on-container-exit --exit-code-from lazts-website; \
-	docker compose -f docker-compose.test.yaml down
+PHONY: test-it
+test-it:
+	@echo "Running integration tests..."
+	go test -v -run "Test.*IT" -tags=integration ./...
 
-cover:
+PHONY: coverage
+coverage:
 	go test -cover -coverprofile=report.out -v ./...
 	go tool cover -html=report.out -o coverage.html
 
-swag:
+PHONY: swagger
+swagger:
 	swag fmt
 	swag init
 
-init:
-	go install github.com/cosmtrek/air@latest
-	go get github.com/golang/mock/mockgen
-	go install github.com/golang/mock/mockgen
-
+PHONY: dev
 dev:
+	@echo "Running the development server..."
 ifeq ($(uname_S), Windows)
 	air -c .air.win.toml
 else
 	air -c .air.toml
 endif
 
+.PHONY: run
 run:
-	make css-minify
-	go run cmd/app/main.go
+	@echo "Running the server..."
+	go run main.go
 
-docker-dev:
-	docker compose -f docker-compose.dev.yaml up --build --renew-anon-volumes --abort-on-container-exit --exit-code-from lazts-website; \
-	docker compose -f docker-compose.dev.yaml down
-
-docker-staging:
-	docker compose -f docker-compose.yaml up --build -d
-
+.PHONY: css
 css:
 	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --watch
 
+.PHONY: css-minify
 css-minify:
 	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --minify
-
-mock:
-	mockgen -source=./internal/modules/imaging/module.go -destination=./mock/imaging_mock.go -package=mock

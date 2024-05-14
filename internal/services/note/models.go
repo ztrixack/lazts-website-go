@@ -49,9 +49,9 @@ func (n Note) ToHTML() NoteHTML {
 	return NoteHTML{
 		Title:         n.Title,
 		Excerpt:       n.Excerpt,
-		Image:         utils.UpdateFeaturedImagePaths(n.FeaturedImage, filepath.Join("/static", "contents", "notes", n.Slug)),
+		Image:         utils.UpdateFeaturedImagePaths(n.FeaturedImage, utils.GetContentPath("notes", n.Slug)),
 		ImageAlt:      n.FeaturedImageAlt,
-		Link:          filepath.Join("/notes", n.Tags[0], n.Slug),
+		Link:          filepath.Join("/", "notes", n.Tags[0], n.Slug),
 		Tags:          ToTags(n.Tags),
 		DateTime:      publishedAt.Format(time.RFC3339),
 		ShowTime:      publishedAt.Format("2016-01-02"),
@@ -66,7 +66,7 @@ func ToTags(tags []string) []TagHTML {
 	for _, tag := range tags {
 		t = append(t, TagHTML{
 			Name:  tag,
-			Link:  filepath.Join("", "notes", strings.ToLower(tag)),
+			Link:  filepath.Join("/", "notes", strings.ToLower(tag)),
 			Count: 1,
 		})
 	}

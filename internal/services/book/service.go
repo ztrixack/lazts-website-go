@@ -19,7 +19,7 @@ type service struct {
 
 var _ Servicer = (*service)(nil)
 
-const HTML_PATH = "templates/sections/books/*.html"
+const HTML_PATH = "web/templates/sections/books/*.html"
 
 func New(log log.Moduler) *service {
 	tpl, err := template.ParseGlob(HTML_PATH)

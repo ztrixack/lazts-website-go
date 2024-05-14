@@ -10,8 +10,7 @@ func (h *handler) Vacations(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.vacationer.RenderHero(w)
-	if err != nil {
+	if err := h.vacationer.RenderHero(w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

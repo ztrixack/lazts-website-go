@@ -23,7 +23,7 @@ func Config() *config {
 func getPathFromENV() string {
 	path := os.Getenv("WATERMARK_PATH")
 	if path == "" {
-		path = "./static/root/watermark.png"
+		path = "./web/static/root/watermark.png"
 	}
 	return path
 }

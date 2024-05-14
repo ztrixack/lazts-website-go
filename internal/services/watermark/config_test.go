@@ -13,7 +13,7 @@ func TestConfig(t *testing.T) {
 		expectPath string
 		expectSize int
 	}{
-		{"new config successfully", "./static/root/watermark.png", 96},
+		{"new config successfully", "./web/static/root/watermark.png", 96},
 	}
 
 	for _, tt := range tests {
@@ -32,7 +32,7 @@ func TestGetPathFromENV(t *testing.T) {
 		expect string
 	}{
 		{"set watermark path successfully", "test", "test"},
-		{"no set watermark path", "", "./static/root/watermark.png"},
+		{"no set watermark path", "", "./web/static/root/watermark.png"},
 	}
 
 	for _, tt := range tests {

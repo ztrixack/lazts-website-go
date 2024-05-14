@@ -11,12 +11,12 @@ type HeroData struct {
 func (s *service) RenderHero(wr io.Writer) error {
 	items, err := s.getList("vacations")
 	if err != nil {
-		s.log.Err(err).E("Error getting vacation list")
+		s.logger.Err(err).E("Error getting vacation list")
 		return err
 	}
 
 	if err := s.templates.ExecuteTemplate(wr, "hero.html", HeroData{items}); err != nil {
-		s.log.Err(err).E("Error executing hero vacations template")
+		s.logger.Err(err).E("Error executing hero vacations template")
 		return err
 	}
 	return nil

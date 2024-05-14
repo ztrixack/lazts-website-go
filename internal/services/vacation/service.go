@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"io"
 	"lazts/internal/modules/log"
-	"lazts/internal/modules/md"
+	"lazts/internal/modules/markdown"
 )
 
 type Servicer interface {
@@ -14,24 +14,25 @@ type Servicer interface {
 }
 
 type service struct {
-	log       log.Moduler
-	markdown  md.Moduler
-	templates *template.Template
+	logger     log.Moduler
+	markdowner markdown.Moduler
+	templates  *template.Template
 }
 
 var _ Servicer = (*service)(nil)
 
-const HTML_PATH = "templates/sections/vacations/*.html"
+const HTML_PATH = "web/templates/sections/vacations/*.html"
 
-func New(log log.Moduler, md md.Moduler) *service {
+func New(log log.Moduler, md markdown.Moduler) *service {
 	tpl, err := template.ParseGlob(HTML_PATH)
 	if err != nil {
 		log.Err(err).C("Error setting up templates")
+		return nil
 	}
 
 	return &service{
-		log:       log,
-		markdown:  md,
-		templates: tpl,
+		logger:     log,
+		markdowner: md,
+		templates:  tpl,
 	}
 }

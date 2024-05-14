@@ -65,7 +65,7 @@ func (s *service) getTagList(name string) ([]TagHTML, error) {
 				if !exist {
 					tags = append(tags, TagHTML{
 						Name:  notetag,
-						Link:  filepath.Join("", name, strings.ToLower(notetag)),
+						Link:  filepath.Join("/", name, strings.ToLower(notetag)),
 						Count: 1,
 					})
 				}

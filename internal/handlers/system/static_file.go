@@ -9,12 +9,12 @@ func (h *handler) StaticFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/manifest.json" {
-		http.ServeFile(w, r, "static/root/manifest.json")
+		http.ServeFile(w, r, "web/static/root/manifest.json")
 		return
 	}
 
 	if r.URL.Path == "/service-worker.js" {
-		http.ServeFile(w, r, "static/root/service-worker.js")
+		http.ServeFile(w, r, "web/static/root/service-worker.js")
 		return
 	}
 

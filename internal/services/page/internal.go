@@ -2,10 +2,10 @@ package page
 
 import (
 	"fmt"
+	"lazts/internal/utils"
 	"math"
 	"math/rand/v2"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/tdewolff/minify/v2"
@@ -40,7 +40,7 @@ func randomizeClouds(count int) []Cloud {
 func injectInlineCSS(html string) string {
 	const stylesheet = "<link href=\"/static/css/app.css\" rel=\"stylesheet\" />"
 	const tailwindcss = "/*!tailwindcss v3.4.3 | MIT License | https://tailwindcss.com*/"
-	appcss, err := os.ReadFile(filepath.Join("", "static", "css", "app.css"))
+	appcss, err := os.ReadFile(utils.GetStaticDir("css", "app.css"))
 	if err != nil {
 		return html
 	}
@@ -61,8 +61,8 @@ func injectInlineCSS(html string) string {
 }
 
 func injectMarkdownCSS(html string) string {
-	const stylesheet = "<link href=\"/static/css/md.css\" rel=\"stylesheet\" />"
-	appcss, err := os.ReadFile(filepath.Join("", "static", "css", "md.css"))
+	const stylesheet = "<link href=\"/static/css/content.css\" rel=\"stylesheet\" />"
+	appcss, err := os.ReadFile(utils.GetStaticDir("css", "content.css"))
 	if err != nil {
 		return html
 	}
@@ -85,7 +85,7 @@ func injectMarkdownCSS(html string) string {
 func removeMarkdownCSS(html string) string {
 	return strings.Replace(
 		html,
-		"<link href=\"/static/css/md.css\" rel=\"stylesheet\" />",
+		"<link href=\"/static/css/content.css\" rel=\"stylesheet\" />",
 		"",
 		1,
 	)

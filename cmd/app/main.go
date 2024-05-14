@@ -9,7 +9,7 @@ import (
 	"lazts/internal/modules/http"
 	"lazts/internal/modules/http/middlewares"
 	"lazts/internal/modules/log"
-	"lazts/internal/modules/md"
+	"lazts/internal/modules/markdown"
 	"lazts/internal/services/book"
 	"lazts/internal/services/note"
 	"lazts/internal/services/page"
@@ -23,7 +23,7 @@ func main() {
 	log := log.New(log.Config())
 	server := http.New(http.Config())
 	server.Use(middlewares.Logger(log), middlewares.Compressor())
-	markdown := md.New(md.Config())
+	markdown := markdown.New(markdown.Config())
 	img := imaging.New(imaging.Config())
 
 	pager := page.New(log, markdown)

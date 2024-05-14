@@ -6,13 +6,15 @@
 .air.*
 .*ignore
 .*rc
-cloudbuild.yaml
+infra/cloudbuild.yaml
 docker-compose.*.yaml
 Dockerfile.*
 Makefile
-package.json
-*-lock.json
-*.config.js
-node_modules
+
+# web
+web/node_modules
+web/package.json
+web/*-lock.json
+web/*.config.js
 
 **/*_test.go

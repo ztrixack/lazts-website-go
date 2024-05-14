@@ -16,7 +16,7 @@ type HighlightData struct {
 func (s *service) RenderHighlight(wr io.Writer) error {
 	item, err := s.getOne("vacations")
 	if err != nil {
-		s.log.Err(err).E("Error getting vacation highlight")
+		s.logger.Err(err).E("Error getting vacation highlight")
 		return err
 	}
 
@@ -30,7 +30,7 @@ func (s *service) RenderHighlight(wr io.Writer) error {
 	}
 
 	if err := s.templates.ExecuteTemplate(wr, "highlight.html", data); err != nil {
-		s.log.Err(err).E("Error executing vacation highlight template")
+		s.logger.Err(err).E("Error executing vacation highlight template")
 		return err
 	}
 	return nil

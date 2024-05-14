@@ -1,30 +1,34 @@
 package utils
 
 import (
+	"bytes"
 	"fmt"
 	"path/filepath"
 	"regexp"
 	"strings"
 )
 
-func UpdateImagePaths(markdownData []byte, newPath string) []byte {
-	// Define a regular expression to match image tags
-	imageTagRegex := regexp.MustCompile(`!\[.*\]\((.*?)\)`)
+func UpdateImagePaths(markdownData []byte, prefixPath string) []byte {
+	re := regexp.MustCompile(`!\[([^\]]*)\]\(([^)]+)\)`)
 
-	// Replace image paths using regular expressions
-	newMarkdown := imageTagRegex.ReplaceAllFunc(markdownData, func(match []byte) []byte {
-		// Extract the image path from the match
-		path := string(imageTagRegex.FindSubmatch(match)[1])
-		// Update the path if it's not an absolute path
-		if !strings.HasPrefix(path, "http://") && !strings.HasPrefix(path, "https://") {
-			updatedPath := filepath.Join(newPath, path)
-			return []byte(fmt.Sprintf("![%s](%s)", path, updatedPath))
+	replaceFunc := func(match []byte) []byte {
+		parts := re.FindSubmatch(match)
+		if len(parts) < 3 {
+			return match
 		}
-		// Otherwise, return the original match
-		return match
-	})
+		text := parts[1]
+		url := parts[2]
 
-	return newMarkdown
+		if bytes.HasPrefix(url, []byte("http://")) || bytes.HasPrefix(url, []byte("https://")) || bytes.HasPrefix(url, []byte("/")) {
+			return match
+		}
+
+		newURL := filepath.Join(prefixPath, string(url))
+
+		return []byte(fmt.Sprintf("![%s](%s)", text, newURL))
+	}
+
+	return re.ReplaceAllFunc(markdownData, replaceFunc)
 }
 
 func UpdateFeaturedImagePaths(path string, newPath string) string {

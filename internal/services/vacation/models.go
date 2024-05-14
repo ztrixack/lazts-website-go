@@ -45,7 +45,7 @@ func (v Vacation) ToHTML() VacationHTML {
 	return VacationHTML{
 		Title:    v.Title,
 		Excerpt:  v.Excerpt,
-		Image:    utils.UpdateFeaturedImagePaths(v.FeaturedImage, filepath.Join("/static", "contents", "vacations", v.Slug)),
+		Image:    utils.UpdateFeaturedImagePaths(v.FeaturedImage, utils.GetContentPath("vacations", v.Slug)),
 		ImageAlt: v.FeaturedImageAlt,
 		Link:     filepath.Join("/", "vacations", v.Slug),
 		ShowDate: utils.ConvertShowDate(from, to),

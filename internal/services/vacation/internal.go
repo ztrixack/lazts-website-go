@@ -13,13 +13,13 @@ func (s *service) getOne(name string) (*VacationHTML, error) {
 	}
 
 	if dirs[0].IsDir() {
-		content, err := s.markdown.ReadFile(name, dirs[0].Name())
+		content, err := s.markdowner.ReadFile(name, dirs[0].Name())
 		if err != nil {
 			return nil, err
 		}
 
 		var vacation Vacation
-		err = s.markdown.Metadata(content, &vacation)
+		err = s.markdowner.Metadata(content, &vacation)
 		if err != nil {
 			return nil, err
 		}
@@ -40,13 +40,13 @@ func (s *service) getList(name string) ([]VacationHTML, error) {
 	vacations := make([]VacationHTML, 0)
 	for _, dir := range dirs {
 		if dir.IsDir() {
-			content, err := s.markdown.ReadFile(name, dir.Name())
+			content, err := s.markdowner.ReadFile(name, dir.Name())
 			if err != nil {
 				return nil, err
 			}
 
 			var vacation Vacation
-			if err := s.markdown.Metadata(content, &vacation); err != nil {
+			if err := s.markdowner.Metadata(content, &vacation); err != nil {
 				return nil, err
 			}
 

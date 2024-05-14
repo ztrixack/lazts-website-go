@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#content {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.htmx-swapping #content {
+  opacity: 0;
+}
+
+body {
+  font-family: 'Kanit', 'sans-serif';
+}
+
+#theme-toggle {
+  box-shadow: inset -9px -8px 1px 1px #ddd;
+}
