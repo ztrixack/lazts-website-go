@@ -14,7 +14,7 @@ func (h *handler) Images(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !strings.HasSuffix(r.URL.Path, ".jpeg") {
-		fs := http.FileServer(http.Dir("static/images"))
+		fs := http.FileServer(http.Dir("web/static/images"))
 		http.StripPrefix("/static/images", fs).ServeHTTP(w, r)
 		return
 	}

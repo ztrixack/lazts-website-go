@@ -33,5 +33,5 @@ func getSizeFromENV() int {
 	if s, _ := strconv.Atoi(size); s > 0 {
 		return s
 	}
-	return 96
+	return 48
 }

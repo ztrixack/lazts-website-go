@@ -57,8 +57,8 @@ run:
 
 .PHONY: css
 css:
-	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --watch
+	cd ./web && pnpm css
 
 .PHONY: css-minify
 css-minify:
-	npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.css --minify
+	cd ./web && pnpm css-minify

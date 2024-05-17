@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+
+	"github.com/chai2010/webp"
 )
 
 func (h *handler) ImageContents(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +31,9 @@ func (h *handler) ImageContents(w http.ResponseWriter, r *http.Request) {
 	case ".png":
 		w.Header().Set("Content-Type", "image/png")
 		png.Encode(w, img)
+	case ".webp":
+		w.Header().Set("Content-Type", "image/webp")
+		webp.Encode(w, img, nil)
 	default:
 		http.Error(w, "Unsupported image format", http.StatusBadRequest)
 		return

@@ -19,6 +19,7 @@ require (
 
 require (
 	github.com/bluele/gcache v0.0.2 // indirect
+	github.com/chai2010/webp v1.1.1
 	github.com/chromedp/cdproto v0.0.0-20240426225625-909263490071 // indirect
 	github.com/chromedp/chromedp v0.9.5 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
