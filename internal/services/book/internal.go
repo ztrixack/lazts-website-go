@@ -12,11 +12,10 @@ import (
 func getCatalogs(books []Book) []models.Option {
 	catalogs := models.Options{models.Option{Key: "ทั้งหมด", Value: ""}}
 	for _, book := range books {
-		catalogs.AppendUnique(book.Catalog)
+		catalogs = catalogs.AppendUnique(book.Catalog)
 	}
-	catalogs.Sort()
 
-	return catalogs
+	return catalogs.Sort()
 }
 
 func getList(name string) ([]Book, error) {
@@ -33,12 +32,21 @@ func getList(name string) ([]Book, error) {
 				return nil, err
 			}
 
-			var book []Book
-			if err := json.Unmarshal(bytes, &book); err != nil {
+			var list []Book
+			if err := json.Unmarshal(bytes, &list); err != nil {
 				return nil, err
 			}
 
-			books = append(books, book...)
+			for i, book := range list {
+				if book.Cover == "" {
+					list[i].Cover = "https://picsum.photos/640/480"
+					continue
+				}
+				name, _ := strings.CutSuffix(file.Name(), ".json")
+				list[i].Cover = utils.GetContentPath("books", name, book.Cover)
+			}
+
+			books = append(books, list...)
 		}
 	}
 

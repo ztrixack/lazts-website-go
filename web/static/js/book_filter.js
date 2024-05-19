@@ -9,6 +9,8 @@ function initFilter() {
 
   document.querySelector('input[name="search"]').value = urlParams.get('search') || '';
   document.querySelector('select[name="catalog"]').value = urlParams.get('catalog') || '';
+
+  updateFilter();
 }
 
 function updateFilter() {
