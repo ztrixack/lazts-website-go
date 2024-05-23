@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
   theme.addEventListener('click', updateTheme);
 
   // Set initial theme from local storage
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.documentElement.classList.remove('dark');
+  if (localStorage.getItem('darkMode') === 'false') {
+    document.documentElement.classList.add('dark');
     updateTheme();
   } else {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('dark');
     updateTheme();
   }
 })

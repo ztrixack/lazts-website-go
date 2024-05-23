@@ -8,27 +8,26 @@ import (
 )
 
 type Vacation struct {
-	Title            string
-	Slug             string
-	Excerpt          string
-	Location         string
-	DateFrom         string
-	DateTo           string
-	FeaturedImage    string
-	FeaturedImageAlt string
-	PublishedAt      string
-	Published        bool
+	Title         string `json:"title"`
+	Slug          string `json:"slug"`
+	Excerpt       string `json:"excerpt"`
+	Location      string `json:"location"`
+	DateFrom      string `json:"date_from"`
+	DateTo        string `json:"date_to"`
+	FeaturedImage string `json:"featured_image"`
+	PublishedAt   string `json:"published_at"`
+	Published     bool   `json:"published"`
+	LastUpdatedAt string `json:"last_updated_at"`
 }
 
 type VacationHTML struct {
-	Title    string
-	Excerpt  string
-	Image    string
-	ImageAlt string
-	Link     string
-	ShowDate string
-	DateTime string
-	Location string
+	Title            string
+	Excerpt          string
+	Location         string
+	DateTimeISO      string
+	DateTimeReadable string
+	FeaturedImage    string
+	Link             string
 }
 
 func (v Vacation) ToHTML() VacationHTML {
@@ -43,13 +42,12 @@ func (v Vacation) ToHTML() VacationHTML {
 	}
 
 	return VacationHTML{
-		Title:    v.Title,
-		Excerpt:  v.Excerpt,
-		Image:    utils.UpdateFeaturedImagePaths(v.FeaturedImage, utils.GetContentPath("vacations", v.Slug)),
-		ImageAlt: v.FeaturedImageAlt,
-		Link:     filepath.Join("/", "vacations", v.Slug),
-		ShowDate: utils.ConvertShowDate(from, to),
-		DateTime: from.Format(time.RFC3339),
-		Location: utils.CountryToFlagEmoji(v.Location),
+		Title:            v.Title,
+		Excerpt:          v.Excerpt,
+		Location:         utils.ToFlagEmoji(v.Location),
+		DateTimeISO:      from.Format(time.RFC3339),
+		DateTimeReadable: utils.ToYearMonthDayRange(from, to),
+		FeaturedImage:    utils.UpdateFeaturedImagePaths(v.FeaturedImage, utils.GetContentPath("vacations", v.Slug)),
+		Link:             filepath.Join("/", "vacations", v.Slug),
 	}
 }

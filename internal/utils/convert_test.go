@@ -10,7 +10,7 @@ import (
 func TestConvertShowDayMonth(t *testing.T) {
 	testTime := time.Date(2022, time.March, 15, 0, 0, 0, 0, time.UTC)
 	expected := "15 Mar"
-	result := ConvertShowDayMonth(testTime)
+	result := ToDayMonth(testTime)
 	assert.Equal(t, expected, result, "Date should be formatted as 'DD MMM'")
 }
 
@@ -51,13 +51,13 @@ func TestConvertShowDate(t *testing.T) {
 	// Execute test cases
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			result := ConvertShowDate(tc.from, tc.to)
+			result := ToYearMonthDayRange(tc.from, tc.to)
 			assert.Equal(t, tc.expected, result)
 		})
 	}
 }
 
 func TestCountryToFlagEmoji(t *testing.T) {
-	assert.Equal(t, "\U0001F1F9\U0001F1ED", CountryToFlagEmoji("Thailand"), "Should return Thai flag emoji")
-	assert.Equal(t, "Mars", CountryToFlagEmoji("Mars"), "Should return the country name if not recognized")
+	assert.Equal(t, "\U0001F1F9\U0001F1ED", ToFlagEmoji("Thailand"), "Should return Thai flag emoji")
+	assert.Equal(t, "Mars", ToFlagEmoji("Mars"), "Should return the country name if not recognized")
 }

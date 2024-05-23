@@ -8,13 +8,13 @@ import (
 )
 
 func (s *service) getOne(domain string, name string) (*Note, error) {
-	content, err := s.markdown.ReadFile(domain, name)
+	content, err := s.markdowner.ReadFile(domain, name)
 	if err != nil {
 		return nil, err
 	}
 
 	var note Note
-	if err := s.markdown.Metadata(content, &note); err != nil {
+	if err := s.markdowner.Metadata(content, &note); err != nil {
 		return nil, err
 	}
 
@@ -30,17 +30,17 @@ func (s *service) getList(name string) ([]NoteHTML, error) {
 	notes := make([]NoteHTML, 0)
 	for _, dir := range dirs {
 		if dir.IsDir() {
-			content, err := s.markdown.ReadFile(name, dir.Name())
+			content, err := s.markdowner.ReadFile(name, dir.Name())
 			if err != nil {
 				return nil, err
 			}
 
 			var note Note
-			if err := s.markdown.Metadata(content, &note); err != nil {
+			if err := s.markdowner.Metadata(content, &note); err != nil {
 				return nil, err
 			}
 
-			notes = append(notes, note.ToHTML())
+			notes = append([]NoteHTML{note.ToHTML()}, notes...)
 		}
 	}
 
@@ -56,13 +56,13 @@ func (s *service) getTagList(name string) ([]TagHTML, error) {
 	tags := make([]TagHTML, 0)
 	for _, dir := range dirs {
 		if dir.IsDir() {
-			content, err := s.markdown.ReadFile(name, dir.Name())
+			content, err := s.markdowner.ReadFile(name, dir.Name())
 			if err != nil {
 				return nil, err
 			}
 
 			var note Note
-			if err := s.markdown.Metadata(content, &note); err != nil {
+			if err := s.markdowner.Metadata(content, &note); err != nil {
 				return nil, err
 			}
 
@@ -88,4 +88,20 @@ func (s *service) getTagList(name string) ([]TagHTML, error) {
 	}
 
 	return tags, nil
+}
+
+func getCount(name string) (int, error) {
+	dirs, err := os.ReadDir(utils.GetContentDir(name))
+	if err != nil {
+		return 0, err
+	}
+
+	count := 0
+	for _, dir := range dirs {
+		if dir.IsDir() {
+			count++
+		}
+	}
+
+	return count, nil
 }

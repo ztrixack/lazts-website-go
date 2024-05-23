@@ -11,22 +11,30 @@
         <div class="flex items-center justify-between">
           <h4 class="text-sm text-slate-600 dark:text-slate-400">หนังสือทั้งหมด</h4>
         </div>
-        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">{{.All}}</span>
+        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">
+          {{.All}}
+          <span class="text-xs font-light text-slate-600 dark:text-slate-400">เล่ม</span>
+        </span>
       </div>
 
       <div id="stats" class="flex flex-col space-y-2 border-l border-gray-300 px-8 py-4 dark:border-gray-700">
         <div class="flex items-center justify-between">
-          <h4 class="text-sm text-slate-600 dark:text-slate-400">จบแล้ว</h4>
-          <span class="text-xs font-light text-white">{{printf "%.2f" .Percent}}%</span>
+          <h4 class="text-sm text-slate-600 dark:text-slate-400">อ่านจบแล้ว</h4>
         </div>
-        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">{{.Read}}</span>
+        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">
+          {{.Read}}
+          <span class="text-xs font-light text-slate-600 dark:text-slate-400">เล่ม</span>
+        </span>
       </div>
 
       <div id="stats" class="flex flex-col space-y-2 border-l border-gray-300 px-8 py-4 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <h4 class="text-sm text-slate-600 dark:text-slate-400">รอแกะซีล</h4>
         </div>
-        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">{{.Unread}}</span>
+        <span class="self-start text-3xl text-slate-800 dark:text-slate-200 md:text-5xl">
+          {{.Unread}}
+          <span class="text-xs font-light text-slate-600 dark:text-slate-400">เล่ม</span>
+        </span>
       </div>
     </div>
 

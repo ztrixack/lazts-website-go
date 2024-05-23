@@ -12,7 +12,7 @@ type ListData struct {
 func (s *service) RenderList(wr io.Writer, search, catalog, status string) error {
 	books, err := getList("books")
 	if err != nil {
-		s.log.Err(err).E("Error getting book list")
+		s.logger.Err(err).E("Error getting book list")
 		return err
 	}
 
@@ -27,10 +27,10 @@ func (s *service) RenderList(wr io.Writer, search, catalog, status string) error
 		}
 	}
 
-	s.log.Fields("search", search, "catalog", catalog, "status", status, "count", len(items)).I("book list")
+	s.logger.Fields("search", search, "catalog", catalog, "status", status, "count", len(items)).I("book list")
 
 	if err := s.templates.ExecuteTemplate(wr, "list.html", ListData{items}); err != nil {
-		s.log.Err(err).E("Error executing book list template")
+		s.logger.Err(err).E("Error executing book list template")
 		return err
 	}
 	return nil

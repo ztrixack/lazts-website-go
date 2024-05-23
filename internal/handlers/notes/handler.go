@@ -23,6 +23,7 @@ func (h *handler) setRouter(m http.Module) {
 	// partials
 	m.Register("GET /_notes/tags", h.Tags)
 	m.Register("GET /_notes/list", h.List)
+	m.Register("GET /_notes/count", h.Count)
 	m.Register("GET /_notes/headers/", h.Header)
 	m.Register("GET /_notes/contents/", h.Content)
 }

@@ -10,10 +10,11 @@ type Servicer interface {
 	RenderHero(wr io.Writer) error
 	RenderFilter(wr io.Writer, search, catalog, status string) error
 	RenderList(wr io.Writer, search, catalog, status string) error
+	RenderCount(wr io.Writer) error
 }
 
 type service struct {
-	log       log.Moduler
+	logger    log.Moduler
 	templates *template.Template
 }
 
@@ -28,7 +29,7 @@ func New(log log.Moduler) *service {
 	}
 
 	return &service{
-		log:       log,
+		logger:    log,
 		templates: tpl,
 	}
 }

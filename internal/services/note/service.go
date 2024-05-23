@@ -12,12 +12,13 @@ type Servicer interface {
 	RenderHero(wr io.Writer) error
 	RenderList(wr io.Writer) error
 	RenderTags(wr io.Writer) error
+	RenderCount(wr io.Writer) error
 }
 
 type service struct {
-	log       log.Moduler
-	markdown  markdown.Moduler
-	templates *template.Template
+	logger     log.Moduler
+	markdowner markdown.Moduler
+	templates  *template.Template
 }
 
 var _ Servicer = (*service)(nil)
@@ -32,8 +33,8 @@ func New(log log.Moduler, md markdown.Moduler) *service {
 	}
 
 	return &service{
-		log:       log,
-		markdown:  md,
-		templates: tpl,
+		logger:     log,
+		markdowner: md,
+		templates:  tpl,
 	}
 }

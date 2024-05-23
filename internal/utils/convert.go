@@ -51,11 +51,11 @@ var thaiWeekdays = map[time.Weekday]string{
 	time.Saturday:  "วันเสาร์",
 }
 
-func ConvertShowDayMonth(t time.Time) string {
+func ToDayMonth(t time.Time) string {
 	return fmt.Sprintf("%02d %s", t.Day(), englishShortMonths[t.Month()])
 }
 
-func ConvertShowDate(from, to time.Time) string {
+func ToYearMonthDayRange(from, to time.Time) string {
 	if from.Format("2016-01-02") == to.Format("2016-01-02") {
 		return fmt.Sprintf("%sที่ %d %s %d", thaiWeekdays[from.Weekday()], from.Day(), thaiMonths[from.Month()], from.Year())
 	}
@@ -71,7 +71,7 @@ func ConvertShowDate(from, to time.Time) string {
 	return fmt.Sprintf("%sที่ %d %s %d - %sที่ %d %s %d", thaiWeekdays[from.Weekday()], from.Day(), thaiMonths[from.Month()], from.Year(), thaiWeekdays[to.Weekday()], to.Day(), thaiMonths[to.Month()], to.Year())
 }
 
-func CountryToFlagEmoji(country string) string {
+func ToFlagEmoji(country string) string {
 	code, exists := countryToCode[country]
 	if !exists {
 		return country

@@ -19,7 +19,7 @@ type HeaderData struct {
 func (s *service) RenderHeader(wr io.Writer, name string) error {
 	item, err := s.getOne("notes", name)
 	if err != nil {
-		s.log.Err(err).E("Error getting notes")
+		s.logger.Err(err).E("Error getting notes")
 		return err
 	}
 
@@ -45,7 +45,7 @@ func (s *service) RenderHeader(wr io.Writer, name string) error {
 	}
 
 	if err := s.templates.ExecuteTemplate(wr, "header.html", data); err != nil {
-		s.log.Err(err).E("Error executing note header template")
+		s.logger.Err(err).E("Error executing note header template")
 		return err
 	}
 

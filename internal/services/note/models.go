@@ -56,7 +56,7 @@ func (n Note) ToHTML() NoteHTML {
 		Tags:          ToTags(n.Tags),
 		DateTime:      publishedAt.Format(time.RFC3339),
 		ShowTime:      publishedAt.Format("2016-01-02"),
-		ShowDateMonth: utils.ConvertShowDayMonth(publishedAt),
+		ShowDateMonth: utils.ToDayMonth(publishedAt),
 		ShowYear:      fmt.Sprintf("%d", publishedAt.Year()),
 		ReadTime:      n.ReadTime,
 	}

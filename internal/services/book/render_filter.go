@@ -16,7 +16,7 @@ type FilterData struct {
 func (s *service) RenderFilter(wr io.Writer, search, catalog, status string) error {
 	books, err := getList("books")
 	if err != nil {
-		s.log.Err(err).E("Error getting book list")
+		s.logger.Err(err).E("Error getting book list")
 		return err
 	}
 
@@ -27,10 +27,10 @@ func (s *service) RenderFilter(wr io.Writer, search, catalog, status string) err
 		Status:         getStatus(),
 		Size:           len(books),
 	}
-	s.log.Fields("data", data).I("Render book filter data")
+	s.logger.Fields("data", data).I("Render book filter data")
 
 	if err := s.templates.ExecuteTemplate(wr, "filter.html", data); err != nil {
-		s.log.Err(err).E("Error executing book filter template")
+		s.logger.Err(err).E("Error executing book filter template")
 		return err
 	}
 	return nil

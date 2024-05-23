@@ -53,6 +53,32 @@ func getList(name string) ([]Book, error) {
 	return books, nil
 }
 
+func getCount(name string) (int, error) {
+	files, err := os.ReadDir(utils.GetContentDir(name))
+	if err != nil {
+		return 0, err
+	}
+
+	count := 0
+	for _, file := range files {
+		if !file.IsDir() && strings.HasSuffix(file.Name(), ".json") {
+			bytes, err := os.ReadFile(utils.GetContentDir(name, file.Name()))
+			if err != nil {
+				return 0, err
+			}
+
+			var list []Book
+			if err := json.Unmarshal(bytes, &list); err != nil {
+				return 0, err
+			}
+
+			count += len(list)
+		}
+	}
+
+	return count, nil
+}
+
 func getStatus() []models.Option {
 	return []models.Option{
 		{Key: "กำลังจะซื้อ", Value: "wishlist"},
@@ -73,7 +99,7 @@ func randomizeOne(books []Book, count int) []Book {
 	return result
 }
 
-func getStats(books []Book) (int, int, float64) {
+func getStats(books []Book) (int, int) {
 	all := len(books)
 	read := 0
 	for _, book := range books {
@@ -81,6 +107,6 @@ func getStats(books []Book) (int, int, float64) {
 			read++
 		}
 	}
-	percent := float64(read) * 100 / float64(all)
-	return all, read, percent
+
+	return all, read
 }

@@ -23,5 +23,6 @@ func (h *handler) setRouter(m http.Module) {
 	// partials
 	m.Register("GET /_vacations/highlight", h.Highlight)
 	m.Register("GET /_vacations/list", h.List)
+	m.Register("GET /_vacations/count", h.Count)
 	m.Register("GET /_vacations/contents/", h.Content)
 }

@@ -11,6 +11,7 @@ type Servicer interface {
 	RenderHero(wr io.Writer) error
 	RenderList(wr io.Writer) error
 	RenderHighlight(wr io.Writer) error
+	RenderCount(wr io.Writer) error
 }
 
 type service struct {
