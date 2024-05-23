@@ -17,5 +17,6 @@ htmx.on('htmx:responseError', function (event) {
 });
 
 if (section && tags && slug) {
+  htmx.ajax('GET', '/_notes/headers/' + tags + '/' + slug, { target: '#title', swap: 'innerHTML', setErrorHandler: true });
   htmx.ajax('GET', '/_notes/contents/' + tags + '/' + slug, { target: '#article', swap: 'innerHTML', setErrorHandler: true });
 }

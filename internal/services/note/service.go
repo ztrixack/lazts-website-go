@@ -8,6 +8,7 @@ import (
 )
 
 type Servicer interface {
+	RenderHeader(wr io.Writer, name string) error
 	RenderHero(wr io.Writer) error
 	RenderList(wr io.Writer) error
 	RenderTags(wr io.Writer) error

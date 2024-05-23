@@ -15,6 +15,7 @@ type Note struct {
 	FeaturedImage    string
 	FeaturedImageAlt string
 	PublishedAt      string
+	LastUpdatedAt    string
 	Published        bool
 	Tags             []string
 	ReadTime         int
@@ -71,4 +72,21 @@ func ToTags(tags []string) []TagHTML {
 		})
 	}
 	return t
+}
+
+func ToBreadcrumbs(tag string) []TagHTML {
+	return []TagHTML{
+		{
+			Name: "Home",
+			Link: "/",
+		},
+		{
+			Name: "Notes",
+			Link: "/notes",
+		},
+		{
+			Name: strings.ToUpper(string(tag[0])) + tag[1:],
+			Link: filepath.Join("/", "notes", tag),
+		},
+	}
 }

@@ -1,7 +1,11 @@
-<section class="container mx-auto my-24 text-slate-900 dark:text-slate-100">
+<section class="container mx-auto">
+  <div name="title" class="my-16 h-full w-full" id="title"></div>
+</section>
+
+<section class="container mx-auto text-slate-900 dark:text-slate-100">
   <article name="article" class="min-h-screen w-full" id="article">Loading ...</article>
 </section>
 
-<script async src="/static/js/note_article.js"></script>
-
 <section>{{template "comments.html" .}}</section>
+
+<script async src="/static/js/note_article.js"></script>

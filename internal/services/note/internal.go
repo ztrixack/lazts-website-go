@@ -7,6 +7,20 @@ import (
 	"strings"
 )
 
+func (s *service) getOne(domain string, name string) (*Note, error) {
+	content, err := s.markdown.ReadFile(domain, name)
+	if err != nil {
+		return nil, err
+	}
+
+	var note Note
+	if err := s.markdown.Metadata(content, &note); err != nil {
+		return nil, err
+	}
+
+	return &note, nil
+}
+
 func (s *service) getList(name string) ([]NoteHTML, error) {
 	dirs, err := os.ReadDir(utils.GetContentDir(name))
 	if err != nil {
