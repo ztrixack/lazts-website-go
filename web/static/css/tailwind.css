@@ -13,3 +13,7 @@
 body {
   font-family: 'Kanit', 'sans-serif';
 }
+
+.katex-html {
+  display: none;
+}

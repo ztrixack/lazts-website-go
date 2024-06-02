@@ -7,8 +7,8 @@ FeaturedImageAlt: Zephyr Fundamental
 PublishedAt: 2023-02-19
 Published: true
 Tags:
-  - Embedded
-  - Zephyr RTOS
+  - embedded
+  - zephyr
 ---
 
 # Zephyr Fundamental - Get Started

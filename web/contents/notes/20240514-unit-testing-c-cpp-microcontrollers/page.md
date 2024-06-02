@@ -1,9 +1,8 @@
 ---
-Title: Test
+Title: Unit Testing บน C/C++ ใน Microcontrollers
 Slug: 20240514-unit-testing-c-cpp-microcontrollers
-Excerpt: Add YAML metadata to the document
+Excerpt: มารู้จักกับ Unit Testing สำหรับภาษา C/C++ บนไมโครคอนโทรลเลอร์ ที่ไม่เพียงแค่ช่วยปรับปรุงคุณภาพของโค้ด แต่ยังทำให้การพัฒนาซอฟต์แวร์ง่ายขึ้นและสนุกมากขึ้นด้วย Framework ต่างๆ ที่มีให้เลือกใช้หลากหลาย
 FeaturedImage: https://picsum.photos/1024/768?random=12
-FeaturedImageAlt: Sample Images
 PublishedAt: 2024-05-14
 Published: true
 Tags:
@@ -12,42 +11,41 @@ Tags:
   - C/C++
 ---
 
-# Unit Testing C/C++ for Microcontrollers
+การเขียนโค้ดบนไมโครคอนโทรลเลอร์จะมีความท้าทายที่แตกต่างจากการเขียนซอฟต์แวร์ทั่วๆ ไป เพราะโค้ดจะถูกฝังลงไปในอุปกรณ์ที่เรามองไม่เห็นและเข้าถึงมันได้ยาก ถ้าเกิดปัญหาขึ้นมา เราอาจต้องเสียเวลามากในการค้นหาสาเหตุ ที่ไม่รู้ว่าเป็นเพราะโค้ดที่เราเขียนหรืออุปกรณ์มันเพี้ยนไป และยิ่งถ้าเป็นช่วงเวลาสำคัญอย่างการนำเสนองานต่อหน้าลูกค้าละก็ ความผิดพลาดเล็กๆ น้อยๆ ก็อาจทำให้เราได้พบลูกค้าคนนั้นเป็นครั้งสุดท้าย!
 
-Unit Testing เป็นแนวทางหนึ่งใน software development เพื่อให้มั่นใจว่าส่วนประกอบแต่ละส่วนของโค้ดจะทำงานได้ตามที่ต้องการ และสามารถ maintain โค้ดชุดนั้นได้ต่อเนื่องยาวนาน คนใหม่ๆ ที่เข้ามาดูแลต่อก็จะมั่นใจว่าจะไม่ทำระบบพัง ซึ่งก็เป็นแนวทางที่ปรมาจารย์ทุกท่านแนะนำแกมบังคับให้ทำตาม
+นี่แหละคือเหตุผลที่เราต้องการ Unit Testing มาช่วย! Unit Testing เป็นวิธีที่ทำให้เรามั่นใจได้ว่าแต่ละส่วนของโค้ดจะทำงานได้ตามที่เราต้องการและคาดหวัง นอกจากนี้ยังช่วยให้โค้ดของเรามีคุณภาพดีขึ้นและง่ายต่อการดูแลรักษา ช่วยให้เราค้นหาข้อผิดพลาดได้เร็ว แก้ไขได้ทันที และลดความเสี่ยงที่โค้ดจะพังในช่วงเวลาสำคัญ (ถึง hardware จะพังจริงๆ แต่อย่างน้อยเราก็มั่นใจได้ว่า firmware ทำงานได้ถูกต้อง)
 
-แต่ถึงแม้ว่ามจะดีแค่ไหน การเขียน unit testing ก็ยากและขัดใจเหลือเกิน โดยเฉพาะเมื่อต้องทำงานร่วมกับ hardware
+การนำ Unit Testing มาใช้ในการพัฒนาไมโครคอนโทรลเลอร์จึงไม่ใช่แค่การเพิ่มขั้นตอนและเวลาในการพัฒนา แต่เป็นการลงทุนเพื่อให้แน่ใจว่าระบบของเราจะทำงานได้อย่างมั่นคงและมีประสิทธิภาพ แม้ในสถานการณ์ที่ท้าทายที่สุด (ใครละ จะอยากเจอปัญหาตอนที่มีหัวหน้าคอยยืนดูอยู่ข้างหลัง!)
 
-ในการเขียน firmware บน microcontroller ส่วนใหญ่จะเน้นไปที่การควบคุมการทำงานของ hardware หรืออุปกรณ์ต่างๆ ไม่ว่าจะเป็นการอ่าน/เขียน register การตอบสนองต่อ event หรือ interrupt จากภายนอก ซึ่งนักพัฒนาอย่างเราๆ ก็จะต้องทำการเทสและดีบักควบคู่กันไปกับอุปกรณ์ต่างๆ ด้วยอยู่แล้ว เมื่อมองในแง่ของการเทส มันก็คือ end-to-end testing ร่วมกับ hardware ตลอดเวลา การเขียน unit testing มาทดสอบอีกครั้งหลังจากทำ end-to-end testing แล้วจึงเป็นอะไรที่ไม่คุ้มค่าเหนื่อยเลย จึงไม่แปลกที่นักพัฒนาจะเริ่มต้นจากการหาวิธีที่มันจะทำงานได้ตามต้องการ ปรับจูนทุกอย่างให้ได้ก่อน เพราะแม้ end-to-end testing จะมี cost สูงแต่สิ่งที่ได้รับคือความสบายใจ
+## ความสำคัญของ Unit Testing
 
-ดังนั้นการที่จะได้เห็น unit testing บน microcontroller จึงเป็นอะไรที่แรร์สุดๆ
+ถ้าเรามีการเขียนโค้ดที่ดี แก้โค้ดง่าย อุปกรณ์พร้อม และมีความสามารถในการหา bug หรือเพิ่ม feature ได้อย่างรวดเร็ว หากเวลาผ่านไปแล้วเป็นเดือนๆ Unit Testing ก็คงจะไม่จำเป็นมากนัก แต่ในความเป็นจริง การหา bug มักเป็นเรื่องยากและใช้เวลานาน หรือการเพิ่ม feature ใหม่ๆ ก็มักจะกระทบกับส่วนอื่นๆ จนต้องทดสอบกันทุกครั้ง ทำให้ต้องเสียเวลาในการทำงานซ้ำๆ บ่อยๆ ซึ่งคงไม่มีใครอยากเสียเวลาแก้โค้ดลากยาวจนดึกดื่น หรือตื่นมาแก้โค้ดตอนตีสาม
 
+อย่างที่บอกไป Unit Testing มีความสำคัญในกระบวนการพัฒนาไมโครคอนโทรลเลอร์ ช่วยให้เราค้นพบข้อผิดพลาดได้เร็วขึ้น ลดค่าใช้จ่ายและความพยายามในการ refactor หรือ optimize โค้ด นอกจากนี้ Unit Testing ยังส่งเสริมการเขียนโค้ดและการออกแบบที่ดีขึ้น ทำให้โค้ดของเราดูดีจนเพื่อนๆ ต้องอิจฉา และยังช่วยให้มั่นใจว่า feature ใหม่หรือการแก้ไขโค้ดจะไม่ทำให้โค้ดเดิมพัง ป้องกันการเกิดบั๊กซ้ำหรือปัญหาที่ไม่คาดคิด ซึ่งเราเองก็คงไม่อยากให้ปัญหาเก่าๆ กลับมากวนใจอีกใช่ไหม?
 
+นอกจากนี้ Unit Testing ยังช่วยให้ requirement ชัดเจนขึ้น รวมถึงฟังก์ชันและพฤติกรรมของโค้ดที่เราคาดหวัง ทำให้เหมือนมีคู่มือแนะนำว่าโค้ดทำงานอย่างไร ตัวอย่างข้อมูลเป็นอย่างไร หรือถ้าโค้ดจะพัง ข้อมูลต้องเป็นแบบไหน ซึ่งแตกต่างจากเอกสารประกอบหรือ comment ที่เรามักจะไม่ค่อยเขียนกัน ซึ่งยากต่อการทำความเข้าใจและแกะโค้ด
 
-แต่ถ้ามองในอีกมุมหนึ่งแล้ว
-โค้ดบน microcontroller ก็ไม่ได้ต่างจากระบบอื่นๆ เลย
+สุดท้าย Unit Testing ยังช่วยให้เรามั่นใจว่าโค้ดทำงานตามที่ตั้งใจไว้ แม้จะมีการเปลี่ยนแปลง จะเปลี่ยนโค้ดกี่ครั้งก็ไม่มีปัญหา
 
-ถ้าเราแยกส่วนของ Hardware การเขียน Register, Interrupt ฯลฯ ออกมาให้อยู่ในรูปของ Module/Service หรืออะไรก็ตามแต่
+## ความท้าทายในการทำ Unit Testing บนไมโครคอนโทรลเลอร์
 
-ดังนั้น สิ่งที่สำคัญอยู่ที่การออกแบบโครงสร้างของ firmware ถ้าออกแบบมาอย่างดีและสามารถแยกชั้นฮาร์ดแวร์และแอปพลิเคชันได้อย่างชัดเจน ก็จะทำให้การเขียน unit test เป็นเรื่องง่ายขึ้น ส่วนของ hardware ก็ใช้ logic analyzer, osciloscope, หรืออุปกรณ์อื่นๆ ส่วนที่เหลือก็จะเป็นเพียงโค้ด C/C++ เพียวๆ ที่สามารถ test บนระบบได้
+การเขียน Unit Testing สำหรับซอฟต์แวร์ปกติมักเป็นเรื่องง่ายกว่า (แต่คนรอบๆ ตัวก็ไม่ค่อยเห็นทำกัน) เพราะโค้ดสามารถรันบนคอมพิวเตอร์ทั่วไปและใช้เครื่องมือที่มีอยู่มากมาย เช่น JUnit สำหรับ Java หรือ PyTest สำหรับ Python Unit Testing ในซอฟต์แวร์ปกติมักจะไม่ต้องกังวลเรื่องฮาร์ดแวร์ ทำให้สามารถโฟกัสที่การทดสอบฟังก์ชันและการทำงานของโค้ดได้เต็มที่
 
-## Why Unit Testing is Essential for Microcontroller Development
+แต่สำหรับไมโครคอนโทรลเลอร์ การเขียนเฟิร์มแวร์มักเน้นไปที่การควบคุมการทำงานของฮาร์ดแวร์หรืออุปกรณ์ต่างๆ เช่น การอ่าน/เขียนรีจิสเตอร์ การตอบสนองต่อเหตุการณ์หรืออินเทอร์รัปต์จากภายนอก เราต้องทดสอบและดีบักพร้อมกับอุปกรณ์ไปด้วยอยู่แล้ว การเขียน Unit Testing มาทดสอบอีกครั้งหลังจากทำ end-to-end testing แล้ว จึงดูเหมือนไม่คุ้มค่าเหนื่อย
 
-หา bug ได้เร็ว: ช่วยให้ค้นพบข้อผิดพลาดได้เร็วขึ้น ลดค่าใช้จ่ายและความพยายามในการแก้ไข
-ปรับปรุงคุณภาพโค้ด: ส่งเสริมการเขียนโค้ดและการออกแบบที่ดีขึ้น
-ป้องกันการเกิดบั๊กซ้ำ: ทำให้มั่นใจว่าการเปลี่ยนแปลงใหม่จะไม่ทำให้ฟังก์ชันการทำงานที่มีอยู่เสียหาย
-เอกสารประกอบ: ให้ตัวอย่างที่ชัดเจนของฟังก์ชันและพฤติกรรมของโมดูลที่คาดหวัง
-เพิ่มความมั่นใจในโค้ด: มั่นใจว่าโค้ดทำงานตามที่ตั้งใจไว้ แม้จะมีการเปลี่ยนแปลง
-สนับสนุนการ: รวมเข้ากับกระบวนการ CI สำหรับการทดสอบและการตรวจสอบอัตโนมัติ
+### End-to-End Testing คืออะไร?
 
-## Why Unit Test Microcontroller Code?
-Microcontrollers are used in critical applications where reliability is paramount. Unit testing helps to:
+End-to-End Testing (E2E) คือกระบวนการทดสอบซอฟต์แวร์ที่ตรวจสอบการทำงานของระบบทั้งหมดตั้งแต่ต้นจนจบ เพื่อให้แน่ใจว่าทุกส่วนของระบบทำงานร่วมกันอย่างถูกต้อง ในกรณีของไมโครคอนโทรลเลอร์ End-to-End Testing หมายถึงการทดสอบเฟิร์มแวร์พร้อมกับฮาร์ดแวร์ทั้งหมด เช่น การทดสอบว่าเมื่อกดปุ่มบนอุปกรณ์แล้ว ไฟ LED จะติดตามที่เขียนไว้ หรือการทดสอบว่าเซนเซอร์สามารถอ่านค่าได้ถูกต้อง
 
-Identify and fix bugs early in the development process.
-Ensure that changes or additions to the code do not break existing functionality.
-Facilitate code refactoring and optimization with confidence.
+End-to-End Testing บนไมโครคอนโทรลเลอร์จึงมีความซับซ้อนในอีกรูปแบบหนึ่งซึ่งต่างจากกรณีอื่นๆ เพราะต้องตรวจสอบทั้งซอฟต์แวร์และฮาร์ดแวร์ร่วมกัน ทำให้เกิดความท้าทายหลายอย่าง เช่น การจัดการกับ interrupt การตรวจสอบการทำงานของรีจิสเตอร์ และการประสานงานระหว่างโมดูลต่างๆ ในระบบ นอกจากนี้ยังต้องใช้เครื่องมือพิเศษ เช่น logic analyzer หรือ oscilloscope เพื่อวิเคราะห์สัญญาณดิจิตอลและอนาล็อก ซึ่งทำให้การทดสอบมีความยุ่งยากและต้องใช้เวลาและความพยายามมากขึ้น
 
-## Unit Test Framework Comparison
+อย่างไรก็ตาม หากมองในอีกมุมหนึ่ง โค้ดบนไมโครคอนโทรลเลอร์ก็ไม่ได้ต่างจากระบบอื่นๆ ถ้าเราแยกส่วนของฮาร์ดแวร์ เช่น การเขียนรีจิสเตอร์ อินเทอร์รัปต์ ฯลฯ ออกมาให้อยู่ในรูปของโมดูลหรือบริการ การออกแบบโครงสร้างของเฟิร์มแวร์ให้สามารถแยกชั้นฮาร์ดแวร์และแอปพลิเคชันได้ชัดเจน ก็จะทำให้การเขียน Unit Test เป็นเรื่องง่ายขึ้น ส่วนของฮาร์ดแวร์ก็ใช้ logic analyzer, oscilloscope, หรืออุปกรณ์อื่นๆ ส่วนที่เหลือก็จะเป็นเพียงโค้ด C/C++ เพียวๆ ที่สามารถทดสอบบนระบบได้
+
+ท้ายที่สุด แม้จะมีความท้าทาย แต่ Unit Testing ก็เป็นสิ่งสำคัญที่ช่วยให้เฟิร์มแวร์มีคุณภาพและความน่าเชื่อถือ การลงทุนเวลาในการเขียน Unit Testing จะช่วยลดปัญหาในระยะยาว ทำให้การพัฒนาซอฟต์แวร์มีประสิทธิภาพมากขึ้นและพร้อมรับมือกับทุกสถานการณ์ และทำให้เราเรียนรู้และพัฒนาทักษะการเขียนโค้ดให้ดีขึ้น
+
+## เปรียบเทียบ Unit Testing Framework
+
+การเลือก Framework ที่เหมาะสมสำหรับ Unit Testing เป็นเรื่องสำคัญมาก
 
 | Framework    | Language | Lightweight | Mocking Framework   | Embedded | Comments                   |
 | ------------ | -------- | ----------- | ------------------- | -------- | -------------------------- |
@@ -59,74 +57,32 @@ Facilitate code refactoring and optimization with confidence.
 | [CppUTest]   | C/C++    | Yes         | Yes (CppUMock)      | Yes      | flexible, active community |
 | [Check]      | C        | Yes         | No                  | Limited  | easy to use, good for CI   |
 
+### CUnit
+CUnit เป็น Unit Testing Framework สำหรับภาษา C ที่ออกแบบมาเพื่อความเรียบง่ายและใช้งานง่าย มันช่วยให้นักพัฒนาสามารถเขียน Unit Test Cases และจัดการกับชุดทดสอบได้อย่างง่ายดาย มีฟังก์ชันพื้นฐานสำหรับการทำ assertions เช่นการตรวจสอบความเท่ากันของค่า การตรวจสอบค่าจริง/เท็จ และการตรวจสอบความถูกต้องของพอยน์เตอร์ ข้อเสียของ CUnit คือมันไม่มีความสามารถในการทำ Mocking ทำให้มีข้อจำกัดในการทดสอบโค้ดที่มีการพึ่งพา dependencies ภายนอก
 
-## Importance of Unit Testing in Microcontroller Development
+### CMock
+CMock เป็น Framework การทำ Mocking สำหรับภาษา C ที่ใช้ร่วมกับ Unity ซึ่งเป็น Unit Testing Framework  CMock ช่วยให้นักพัฒนาสามารถสร้าง mocks และ stubs สำหรับฟังก์ชันที่มีการพึ่งพา dependencies ภายนอกได้อย่างง่ายดาย โดย CMock จะสร้างฟังก์ชันจำลองขึ้นมาแทนที่ฟังก์ชันจริงในโค้ด ทำให้สามารถทดสอบฟังก์ชันที่เหลือได้ในสภาพแวดล้อมที่แยกออกมา ข้อดีของ CMock คือมันทำให้การทดสอบโค้ดที่ซับซ้อนและการพึ่งพาภายนอกเป็นเรื่องง่ายขึ้น
 
-Unit testing in microcontroller development helps to:
-- Identify and fix bugs early in the development process.
-- Ensure that individual modules of code work correctly before integration.
-- Facilitate maintenance and refactoring of code.
-- Improve code reliability and robustness.
+### Unity
+Unity เป็น Unit Testing Framework สำหรับภาษา C ที่ถูกออกแบบมาให้มีน้ำหนักเบาและใช้งานง่าย มันมีฟังก์ชันการยืนยันที่หลากหลาย เช่นการตรวจสอบค่าจริง/เท็จ การตรวจสอบความเท่ากันของค่า และการตรวจสอบข้อยกเว้น Unity ยังรองรับการทำงานร่วมกับ CMock เพื่อเพิ่มความสามารถในการทำ Mocking ทำให้สามารถทดสอบโค้ดที่มีการพึ่งพา dependencies ภายนอกได้ง่ายขึ้น Unity ถูกใช้อย่างแพร่หลายในโครงการ embedded และไมโครคอนโทรลเลอร์เนื่องจากมีขนาดเล็กและมีประสิทธิภาพสูง
 
-## Implementing Unit Testing in Microcontroller Projects
+### Ceedling
+Ceedling เป็น Unit Testing Framework ที่ครอบคลุมสำหรับภาษา C มันรวมเอา Unity และ CMock เข้าด้วยกัน และเพิ่มเครื่องมือในการจัดการโครงการและ workflow Ceedling ช่วยในการสร้างโครงการ การจัดการการทดสอบ การสร้างรายงานผลการทดสอบ และการทำงานร่วมกับระบบ CI ทำให้กระบวนการทดสอบหน่วยเป็นไปอย่างราบรื่นและมีประสิทธิภาพมากขึ้น Ceedling ยังมี plugin ที่สามารถเพิ่มความสามารถเพิ่มเติมได้ตามต้องการ
 
-### 1. **Setting Up the Environment**
-   - Choose a suitable unit testing framework based on project requirements and constraints.
-   - Integrate the framework with the build system (e.g., Ceedling for a complete TDD setup).
+### GoogleTest
+GoogleTest เป็น Unit Testing Framework ที่ทรงพลังสำหรับภาษา C++ มันถูกพัฒนาโดย Google และมีเอกสารประกอบที่ครอบคลุม GoogleTest รองรับการทำ Mocking ผ่าน GMock ซึ่งช่วยให้นักพัฒนาสามารถสร้าง mocks และ stubs สำหรับ dependencies ได้อย่างง่ายดาย GoogleTest มีฟังก์ชันการยืนยันที่หลากหลายและสามารถสร้างการทดสอบที่ซับซ้อนได้ ข้อเสียคือ GoogleTest ไม่ใช่ Framework ที่มีน้ำหนักเบา ทำให้ไม่เหมาะสำหรับการใช้งานในระบบที่มีข้อจำกัดด้านทรัพยากร
 
-### 2. **Writing Tests**
-   - Begin with writing test cases for individual functions.
-   - Use assertions to validate expected outcomes.
-   - Ensure tests are isolated and do not depend on external states.
+### CppUTest
+CppUTest เป็น Unit Testing Framework ที่รองรับทั้งภาษา C และ C++ มีน้ำหนักเบาและรองรับการทำ Mocking ผ่าน CppUMock CppUTest ถูกออกแบบมาเพื่อการทดสอบหน่วยในระบบฝังตัว (embedded systems) และมีชุมชนที่ใช้งานอย่างต่อเนื่อง มันมีฟังก์ชันการยืนยันที่หลากหลายและสามารถจัดการกับการทดสอบที่ซับซ้อนได้อย่างมีประสิทธิภาพ ข้อดีของ CppUTest คือมันมีความยืดหยุ่นสูงและสามารถปรับแต่งได้ตามความต้องการของโครงการ
 
-### 3. **Mocking and Stubbing**
-   - Use tools like CMock to create mocks and stubs for dependencies.
-   - This allows for testing functions in isolation, especially useful when dealing with hardware-specific code.
+### Check
+Check เป็น Unit Testing Framework สำหรับภาษา C ที่มีน้ำหนักเบาและใช้งานง่าย มันถูกออกแบบมาให้ทำงานร่วมกับระบบ Continuous Integration (CI) ได้ดี Check มีฟังก์ชันการยืนยันพื้นฐานและการจัดการกับชุดทดสอบที่ง่ายดาย ข้อเสียของ Check คือมันไม่มีความสามารถในการทำ Mocking ทำให้มีข้อจำกัดในการทดสอบโค้ดที่มีการพึ่งพา dependencies ภายนอก แม้จะมีข้อจำกัด แต่ Check ก็ยังเป็นเครื่องมือที่ดีสำหรับการทดสอบพื้นฐานในโครงการที่ไม่ซับซ้อน
 
-### 4. **Continuous Integration**
-   - Integrate unit tests with a continuous integration (CI) system.
-   - Automate test execution to catch regressions early.
+## สรุป
 
-### 5. **Test-Driven Development (TDD)**
-   - Adopt TDD practices by writing tests before the actual code.
-   - This ensures that code is always written to satisfy the test requirements, leading to better design and fewer defects.
+การทำ Unit Testing ในการพัฒนาไมโครคอนโทรลเลอร์เป็นสิ่งสำคัญในการสร้างซอฟต์แวร์ที่เชื่อถือได้และสามารถบำรุงรักษาได้ โดยการใช้ Framework อย่าง Unity, CMock, และ Ceedling นักพัฒนาสามารถนำการทดสอบหน่วยมาใช้และปฏิบัติตามแนวทางปฏิบัติที่ดีที่สุด เช่น TDD และการรวมเข้ากับ CI แนวทางเหล่านี้ช่วยให้มั่นใจว่าซอฟต์แวร์ฝังตัวมีความแข็งแกร่ง มีบั๊กน้อยลง และง่ายต่อการบำรุงรักษา
 
-## Example Workflow with Ceedling
-
-1. **Initialize the Project**
-   ```sh
-   ceedling new project_name
-   cd project_name
-   ```
-
-2. **Write a Test Case**
-   ```c
-   // test/test_example.c
-   #include "unity.h"
-   #include "example.h"
-
-   void test_addition(void) {
-       TEST_ASSERT_EQUAL(4, add(2, 2));
-   }
-   ```
-
-3. **Run Tests**
-   ```sh
-   ceedling test:all
-   ```
-
-## When to Use Mocking
-
-Mocking is essential when:
-- The code interacts with hardware peripherals.
-- Dependencies are complex or not yet implemented.
-- Testing interactions with external systems.
-
-## Conclusion
-
-Unit testing in microcontroller development is crucial for building reliable and maintainable software. By leveraging frameworks like Unity, CMock, and Ceedling, developers can implement effective unit tests and adopt best practices such as TDD and continuous integration. These practices ensure that embedded software is robust, with fewer bugs and easier maintenance.
-
-By following the guidelines and utilizing the right tools, you can enhance the quality of your microcontroller projects and deliver reliable embedded systems.
+โดยการปฏิบัติตามแนวทางเหล่านี้และใช้เครื่องมือที่เหมาะสม เราก็สามารถปรับปรุงคุณภาพของโครงการไมโครคอนโทรลเลอร์ของคุณและส่งมอบระบบฝังตัวที่เชื่อถือได้
 
 ## Reference
 [How To Implement C Programming Unit Testing Successfully](https://marketsplash.com/c-programming-unit-testing/)

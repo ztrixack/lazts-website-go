@@ -5,7 +5,7 @@ Excerpt:
 FeaturedImage: https://picsum.photos/1024/768?random=12
 FeaturedImageAlt: GPIO fundamental
 PublishedAt: 2016-10-30
-Published: true
+Published: false
 Tags:
   - embedded
 ---

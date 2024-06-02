@@ -8,7 +8,7 @@ PublishedAt: 2021-06-13
 UpdatedAt: 2024-05-20
 Published: true
 Tags:
-  - Firmware Development
+  - embedded
   - nRF52840
 ---
 

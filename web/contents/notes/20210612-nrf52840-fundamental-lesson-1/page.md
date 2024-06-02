@@ -6,9 +6,9 @@ FeaturedImage: nrf52840-0000.png
 FeaturedImageAlt: Getting started with nRF52840 Development Kit
 PublishedAt: 2021-06-12
 UpdatedAt: 2024-05-20
-Published: true
+Published: false
 Tags:
-  - Firmware Development
+  - embedded
   - nRF52840
 ---
 
