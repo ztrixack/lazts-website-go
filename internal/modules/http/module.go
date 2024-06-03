@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-type Module interface {
+type Moduler interface {
 	Config() config
 	Register(path string, handler http.HandlerFunc)
 	Handle(path string, handler http.Handler)

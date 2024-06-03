@@ -9,30 +9,28 @@ import (
 )
 
 type Note struct {
-	Title            string
-	Slug             string
-	Excerpt          string
-	FeaturedImage    string
-	FeaturedImageAlt string
-	PublishedAt      string
-	LastUpdatedAt    string
-	Published        bool
-	Tags             []string
-	ReadTime         int
+	Title         string   `json:"title"`
+	Slug          string   `json:"slug"`
+	Excerpt       string   `json:"excerpt"`
+	FeaturedImage string   `json:"featured_image"`
+	PublishedAt   string   `json:"published_at"`
+	LastUpdatedAt string   `json:"last_updated_at"`
+	Published     bool     `json:"published"`
+	Tags          []string `json:"tags"`
+	ReadTime      int      `json:"-"`
 }
 
 type NoteHTML struct {
-	Title         string
-	Excerpt       string
-	Image         string
-	ImageAlt      string
-	Link          string
-	Tags          []TagHTML
-	DateTime      string
-	ShowTime      string
-	ShowDateMonth string
-	ShowYear      string
-	ReadTime      int
+	Title            string
+	Excerpt          string
+	FeaturedImage    string
+	Link             string
+	Tags             []TagHTML
+	ReadTime         int
+	DateTimeISO      string
+	DateTimeReadable string
+	DayMonth         string
+	Year             string
 }
 
 type TagHTML struct {
@@ -48,17 +46,16 @@ func (n Note) ToHTML() NoteHTML {
 	}
 
 	return NoteHTML{
-		Title:         n.Title,
-		Excerpt:       n.Excerpt,
-		Image:         utils.UpdateFeaturedImagePaths(n.FeaturedImage, utils.GetContentPath("notes", n.Slug)),
-		ImageAlt:      n.FeaturedImageAlt,
-		Link:          filepath.Join("/", "notes", n.Tags[0], n.Slug),
-		Tags:          ToTags(n.Tags),
-		DateTime:      publishedAt.Format(time.RFC3339),
-		ShowTime:      publishedAt.Format("2016-01-02"),
-		ShowDateMonth: utils.ToDayMonth(publishedAt),
-		ShowYear:      fmt.Sprintf("%d", publishedAt.Year()),
-		ReadTime:      n.ReadTime,
+		Title:            n.Title,
+		Excerpt:          n.Excerpt,
+		FeaturedImage:    utils.UpdateFeaturedImagePaths(n.FeaturedImage, utils.GetContentPath("notes", n.Slug)),
+		Link:             filepath.Join("/", "notes", n.Tags[0], n.Slug),
+		Tags:             ToTags(n.Tags),
+		ReadTime:         n.ReadTime,
+		DateTimeISO:      publishedAt.Format(time.RFC3339),
+		DateTimeReadable: utils.ToYearMonthDay(publishedAt),
+		DayMonth:         utils.ToDayMonth(publishedAt),
+		Year:             fmt.Sprintf("%d", publishedAt.Year()),
 	}
 }
 

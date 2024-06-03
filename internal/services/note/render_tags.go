@@ -15,6 +15,8 @@ func (s *service) RenderTags(wr io.Writer) error {
 		return err
 	}
 
+	s.logger.Fields("count", len(items)).I("rendered tag notes")
+
 	if err := s.templates.ExecuteTemplate(wr, "tags.html", TagsData{items}); err != nil {
 		s.logger.Err(err).E("Error executing note tags template")
 		return err

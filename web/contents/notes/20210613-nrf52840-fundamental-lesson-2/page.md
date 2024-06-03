@@ -1,13 +1,12 @@
 ---
-Title: Devicetree
-Slug: 20210612-nrf52840-part-1
-Excerpt: บันทึกการเรียนรู้วิธีการติดตั้งเครื่องมือต่างๆ สำหรับการพัฒนา nRF52840 Development Kit Board
-FeaturedImage: nrf52840-0000.png
-FeaturedImageAlt: Getting started with nRF52840 Development Kit
-PublishedAt: 2021-06-13
-UpdatedAt: 2024-05-20
-Published: true
-Tags:
+title: Devicetree
+slug: 20210612-nrf52840-part-1
+excerpt: บันทึกการเรียนรู้วิธีการติดตั้งเครื่องมือต่างๆ สำหรับการพัฒนา nRF52840 Development Kit Board
+featured_image: nrf52840-0000.png
+published_at: 2021-06-13
+last_updated_at: 2024-05-20
+published: false
+tags:
   - embedded
   - nRF52840
 ---

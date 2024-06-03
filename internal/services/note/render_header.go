@@ -36,13 +36,15 @@ func (s *service) RenderHeader(wr io.Writer, name string) error {
 	data := HeaderData{
 		Title:           item.Title,
 		PublishedDate:   publishedAt.Format(time.RFC3339),
-		Published:       publishedAt.Format("2016-01-02"),
+		Published:       publishedAt.Format("2006-01-02"),
 		LastUpdatedDate: lastUpdatedAt.Format(time.RFC3339),
-		LastUpdated:     lastUpdatedAt.Format("2016-01-02"),
+		LastUpdated:     lastUpdatedAt.Format("2006-01-02"),
 		ReadTime:        item.ReadTime,
 		Tags:            ToTags(item.Tags),
 		Breadcrumbs:     ToBreadcrumbs(item.Tags[0]),
 	}
+
+	s.logger.Fields("title", item.Title).I("rendered header notes")
 
 	if err := s.templates.ExecuteTemplate(wr, "header.html", data); err != nil {
 		s.logger.Err(err).E("Error executing note header template")

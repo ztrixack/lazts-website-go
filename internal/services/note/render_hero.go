@@ -15,6 +15,8 @@ func (s *service) RenderHero(wr io.Writer) error {
 		return err
 	}
 
+	s.logger.Fields("count", len(items)).I("rendered hero notes")
+
 	if err := s.templates.ExecuteTemplate(wr, "hero.html", HeroData{items}); err != nil {
 		s.logger.Err(err).E("Error executing hero notes template")
 		return err

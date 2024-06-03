@@ -61,8 +61,8 @@ func injectInlineCSS(html string) string {
 }
 
 func injectMarkdownCSS(html string) string {
-	const stylesheet = "<link href=\"/static/css/content.css\" rel=\"stylesheet\" />"
-	appcss, err := os.ReadFile(utils.GetStaticDir("css", "content.css"))
+	const stylesheet = "<link href=\"/static/css/markdown.css\" rel=\"stylesheet\" />"
+	appcss, err := os.ReadFile(utils.GetStaticDir("css", "markdown.css"))
 	if err != nil {
 		return html
 	}
@@ -85,7 +85,7 @@ func injectMarkdownCSS(html string) string {
 func removeMarkdownCSS(html string) string {
 	return strings.Replace(
 		html,
-		"<link href=\"/static/css/content.css\" rel=\"stylesheet\" />",
+		"<link href=\"/static/css/markdown.css\" rel=\"stylesheet\" />",
 		"",
 		1,
 	)

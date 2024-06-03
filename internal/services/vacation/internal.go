@@ -24,6 +24,10 @@ func (s *service) getList(name string) ([]VacationHTML, error) {
 				return nil, err
 			}
 
+			if !vacation.Published {
+				continue
+			}
+
 			vacations = append([]VacationHTML{vacation.ToHTML()}, vacations...)
 		}
 	}

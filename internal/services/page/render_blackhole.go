@@ -22,8 +22,10 @@ func (s *service) RenderBlackhole(wr io.Writer, count int) error {
 		Items:    randomizeBlackholes(count),
 	}
 
+	s.logger.Fields("count", len(data.Items)).I("rendered blackhole")
+
 	if err := s.templates.ExecuteTemplate(wr, "blackhole.html", data); err != nil {
-		s.log.Err(err).E("Error executing hero blackhole template")
+		s.logger.Err(err).E("Error executing hero blackhole template")
 		return err
 	}
 	return nil

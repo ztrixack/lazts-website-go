@@ -1,12 +1,12 @@
 ---
-Title: Zephyr Fundamental - Get Started
-Slug: 20230219-zephyr-fundamental
-Excerpt:
-FeaturedImage: 0000.jpeg
-FeaturedImageAlt: Zephyr Fundamental
-PublishedAt: 2023-02-19
-Published: true
-Tags:
+title: Zephyr Fundamental - Get Started
+slug: 20230219-zephyr-fundamental
+excerpt:
+featured_image: 0000.jpeg
+published_at: 2023-02-19
+last_updated_at: 2024-05-20
+published: false
+tags:
   - embedded
   - zephyr
 ---

@@ -9,14 +9,19 @@ const tags = segments[1];
 const slug = segments[2];
 const section = document.querySelector('article[name="article"]');
 
-htmx.on('htmx:responseError', function (event) {
-  if (event.detail.xhr.status === 404) {
-    const target = event.detail.target;
-    target.innerHTML = 'Error: The requested article could not be found.';
-  }
-});
-
 if (section && tags && slug) {
-  htmx.ajax('GET', '/_notes/headers/' + tags + '/' + slug, { target: '#title', swap: 'innerHTML', setErrorHandler: true });
-  htmx.ajax('GET', '/_notes/contents/' + tags + '/' + slug, { target: '#article', swap: 'innerHTML', setErrorHandler: true });
+  setTimeout(function(){
+    htmx.ajax('GET', '/_notes/headers/' + tags + '/' + slug, {
+      target: '#title',
+      swap: 'innerHTML',
+      setErrorHandler: true,
+    });
+}, 100);
+  htmx.ajax('GET', '/_notes/contents/' + tags + '/' + slug, {
+    target: '#article',
+    swap: 'innerHTML',
+    setErrorHandler: true,
+  });
+} else {
+  section.innerHTML = 'Error: The requested article could not be found.';
 }

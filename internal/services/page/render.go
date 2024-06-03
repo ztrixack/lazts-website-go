@@ -31,7 +31,7 @@ func (s *service) Render(wr io.Writer, name string) error {
 	}
 
 	if err := s.templates.ExecuteTemplate(&buf, fmt.Sprintf("%s.html", name), data); err != nil {
-		s.log.Err(err).E("Error executing page template")
+		s.logger.Err(err).E("Error executing page template")
 		return err
 	}
 
@@ -39,7 +39,7 @@ func (s *service) Render(wr io.Writer, name string) error {
 
 	var finalBuf bytes.Buffer
 	if err := s.templates.ExecuteTemplate(&finalBuf, "layout.html", data); err != nil {
-		s.log.Err(err).E("Error executing layout template")
+		s.logger.Err(err).E("Error executing layout template")
 		return err
 	}
 
@@ -51,9 +51,11 @@ func (s *service) Render(wr io.Writer, name string) error {
 		htmlWithInlineCSS = removeMarkdownCSS(htmlWithInlineCSS)
 	}
 
+	s.logger.Fields("name", name).I("rendered html")
+
 	_, err := wr.Write([]byte(htmlWithInlineCSS))
 	if err != nil {
-		s.log.Err(err).E("Error writing final content")
+		s.logger.Err(err).E("Error writing final content")
 		return err
 	}
 

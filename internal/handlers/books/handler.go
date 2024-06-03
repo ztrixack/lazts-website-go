@@ -11,12 +11,12 @@ type handler struct {
 	book book.Servicer
 }
 
-func New(m http.Module, page page.Servicer, book book.Servicer) {
+func New(m http.Moduler, page page.Servicer, book book.Servicer) {
 	h := &handler{page, book}
 	h.setRouter(m)
 }
 
-func (h *handler) setRouter(m http.Module) {
+func (h *handler) setRouter(m http.Moduler) {
 	// page
 	m.Register("GET /books", h.Page)
 

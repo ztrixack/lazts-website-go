@@ -15,7 +15,7 @@ type Servicer interface {
 }
 
 type service struct {
-	log       log.Moduler
+	logger    log.Moduler
 	markdown  markdown.Moduler
 	templates *template.Template
 }
@@ -31,7 +31,7 @@ func New(log log.Moduler, md markdown.Moduler) *service {
 	}
 
 	return &service{
-		log:       log,
+		logger:    log,
 		markdown:  md,
 		templates: tpl,
 	}

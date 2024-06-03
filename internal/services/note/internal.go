@@ -40,6 +40,10 @@ func (s *service) getList(name string) ([]NoteHTML, error) {
 				return nil, err
 			}
 
+			if !note.Published {
+				continue
+			}
+
 			notes = append([]NoteHTML{note.ToHTML()}, notes...)
 		}
 	}
@@ -64,6 +68,10 @@ func (s *service) getTagList(name string) ([]TagHTML, error) {
 			var note Note
 			if err := s.markdowner.Metadata(content, &note); err != nil {
 				return nil, err
+			}
+
+			if !note.Published {
+				continue
 			}
 
 			for _, notetag := range note.Tags {

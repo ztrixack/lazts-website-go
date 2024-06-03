@@ -1,13 +1,14 @@
 ---
-Title: Unit Testing บน C/C++ ใน Microcontrollers
-Slug: 20240514-unit-testing-c-cpp-microcontrollers
-Excerpt: มารู้จักกับ Unit Testing สำหรับภาษา C/C++ บนไมโครคอนโทรลเลอร์ ที่ไม่เพียงแค่ช่วยปรับปรุงคุณภาพของโค้ด แต่ยังทำให้การพัฒนาซอฟต์แวร์ง่ายขึ้นและสนุกมากขึ้นด้วย Framework ต่างๆ ที่มีให้เลือกใช้หลากหลาย
-FeaturedImage: https://picsum.photos/1024/768?random=12
-PublishedAt: 2024-05-14
-Published: true
-Tags:
+title: Unit Testing บน C/C++ ใน Microcontrollers
+slug: 20240514-unit-testing-c-cpp-microcontrollers
+excerpt: มารู้จักกับ Unit Testing สำหรับภาษา C/C++ บนไมโครคอนโทรลเลอร์ ที่ไม่เพียงแค่ช่วยปรับปรุงคุณภาพของโค้ด แต่ยังทำให้การพัฒนาซอฟต์แวร์ง่ายขึ้นและสนุกมากขึ้นด้วย Framework ต่างๆ ที่มีให้เลือกใช้หลากหลาย
+featured_image: https://picsum.photos/1024/768?random=12
+published_at: 2024-05-14
+last_updated_at: 2024-05-20
+published: false
+tags:
   - embedded
-  - test
+  - testing
   - C/C++
 ---
 

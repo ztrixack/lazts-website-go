@@ -15,6 +15,8 @@ func (s *service) RenderList(wr io.Writer) error {
 		return err
 	}
 
+	s.logger.Fields("count", len(items)).I("rendered list notes")
+
 	if err := s.templates.ExecuteTemplate(wr, "list.html", ListData{items}); err != nil {
 		s.logger.Err(err).E("Error executing note list template")
 		return err

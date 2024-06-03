@@ -2,21 +2,23 @@ package notes
 
 import (
 	"lazts/internal/modules/http"
+	"lazts/internal/modules/log"
 	"lazts/internal/services/note"
 	"lazts/internal/services/page"
 )
 
 type handler struct {
-	pager page.Servicer
-	noter note.Servicer
+	logger log.Moduler
+	pager  page.Servicer
+	noter  note.Servicer
 }
 
-func New(m http.Module, ps page.Servicer, ns note.Servicer) {
-	h := &handler{ps, ns}
+func New(l log.Moduler, m http.Moduler, ps page.Servicer, ns note.Servicer) {
+	h := &handler{l, ps, ns}
 	h.setRouter(m)
 }
 
-func (h *handler) setRouter(m http.Module) {
+func (h *handler) setRouter(m http.Moduler) {
 	// page
 	m.Register("GET /notes/", h.Page)
 

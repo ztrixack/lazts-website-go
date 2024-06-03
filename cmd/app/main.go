@@ -35,7 +35,7 @@ func main() {
 	home.New(server, pager, booker, vacationer, noter)
 	books.New(server, pager, booker)
 	vacations.New(server, pager, vacationer)
-	notes.New(server, pager, noter)
+	notes.New(log, server, pager, noter)
 	system.New(server, pager, watermarker)
 
 	log.Fields("port", server.Config().Port).I("starting server")

@@ -15,12 +15,12 @@ type handler struct {
 	noter      note.Servicer
 }
 
-func New(m http.Module, ps page.Servicer, bs book.Servicer, vs vacation.Servicer, ns note.Servicer) {
+func New(m http.Moduler, ps page.Servicer, bs book.Servicer, vs vacation.Servicer, ns note.Servicer) {
 	h := &handler{ps, bs, vs, ns}
 	h.setRouter(m)
 }
 
-func (h *handler) setRouter(m http.Module) {
+func (h *handler) setRouter(m http.Moduler) {
 	// page
 	m.Register("GET /", h.Home)
 	m.Register("GET /about", h.About)

@@ -12,12 +12,12 @@ type handler struct {
 	ws watermark.Servicer
 }
 
-func New(m http.Module, hs page.Servicer, ws watermark.Servicer) {
+func New(m http.Moduler, hs page.Servicer, ws watermark.Servicer) {
 	h := &handler{hs, ws}
 	h.setRouter(m)
 }
 
-func (h *handler) setRouter(m http.Module) {
+func (h *handler) setRouter(m http.Moduler) {
 	minify := middlewares.Minify()
 	m.Register("GET /static/icons/", h.Icons)
 	m.Register("GET /static/images/", h.Images)

@@ -9,8 +9,10 @@ type CloudData struct {
 }
 
 func (s *service) RenderCloud(wr io.Writer, count int) error {
+	s.logger.I("rendered cloud")
+
 	if err := s.templates.ExecuteTemplate(wr, "cloud.html", CloudData{randomizeClouds(count)}); err != nil {
-		s.log.Err(err).E("Error executing hero cloud template")
+		s.logger.Err(err).E("Error executing hero cloud template")
 		return err
 	}
 	return nil
